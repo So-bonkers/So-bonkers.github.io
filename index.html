@@ -5,410 +5,426 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shubhankar Kamthankar</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
     :root {
-      --bg: #0a0a0f;
-      --surface: #13131a;
-      --surface2: #1c1c28;
-      --border: #2a2a3a;
-      --accent: #7c6af7;
-      --accent2: #56cfb2;
-      --text: #e8e8f0;
-      --muted: #8888a8;
-      --tag-bg: #1e1e30;
+      --ink: #0e0e0e;
+      --ink2: #1a1a1a;
+      --surface: #f7f5f0;
+      --paper: #faf9f6;
+      --rule: #e2ddd6;
+      --gold: #b8873a;
+      --gold-light: #d4a85c;
+      --text: #1c1c1c;
+      --muted: #6b6559;
+      --muted2: #9c9488;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: var(--paper);
       color: var(--text);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 16px;
       line-height: 1.7;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent2); }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { color: var(--gold-light); }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250,249,246,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--rule);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 5%;
-      height: 60px;
+      padding: 0 6%;
+      height: 58px;
     }
     .nav-logo {
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--text);
-      letter-spacing: 0.02em;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
     }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.9rem;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
 
-    /* SECTIONS */
-    section { padding: 90px 5% 60px; max-width: 1100px; margin: 0 auto; }
+    /* ── WRAPPER ── */
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 6%; }
 
-    .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .section-title {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 2.5rem;
-      color: var(--text);
-    }
-
-    /* HERO */
+    /* ── HERO ── */
     #hero {
       min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .hero-tag {
-      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      padding: 0.35rem 1rem;
-      font-size: 0.85rem;
-      color: var(--accent2);
+      padding-top: 58px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 0 6%;
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
       margin-bottom: 1.5rem;
-      width: fit-content;
-    }
-    .hero-tag span { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    .hero-name {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-    }
-    .hero-name .highlight { color: var(--accent); }
-    .hero-title {
-      font-size: 1.25rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 4.5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .hero-role {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 300;
+      margin-bottom: 2rem;
+      letter-spacing: 0.01em;
     }
     .hero-bio {
-      max-width: 620px;
+      font-size: 0.95rem;
       color: var(--muted);
-      font-size: 1rem;
+      line-height: 1.85;
       margin-bottom: 2.5rem;
-      line-height: 1.8;
+      max-width: 440px;
     }
-    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.4rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      font-size: 0.82rem;
       font-weight: 500;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
       transition: all 0.2s;
       cursor: pointer;
     }
-    .btn-primary {
-      background: var(--accent);
+    .btn-gold {
+      background: var(--gold);
       color: #fff;
-      border: 1px solid var(--accent);
+      border: 1px solid var(--gold);
     }
-    .btn-primary:hover { background: #9585ff; color: #fff; }
-    .btn-outline {
+    .btn-gold:hover { background: var(--gold-light); border-color: var(--gold-light); color: #fff; }
+    .btn-ghost {
       background: transparent;
       color: var(--text);
-      border: 1px solid var(--border);
+      border: 1px solid var(--rule);
     }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
-    .hero-scroll {
-      margin-top: 4rem;
-      color: var(--muted);
-      font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .hero-scroll::after {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 1px;
-      background: var(--border);
-    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-    .about-text p { color: var(--muted); margin-bottom: 1rem; }
-    .stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .hero-right { position: relative; }
+    .hero-stat-stack { display: flex; flex-direction: column; gap: 1px; }
+    .hero-stat {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
       gap: 1rem;
     }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
+    .hero-stat:first-child { border-radius: 6px 6px 0 0; }
+    .hero-stat:last-child { border-radius: 0 0 6px 6px; }
+    .hs-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: -0.02em;
     }
-    .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--accent); }
-    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.25rem; }
+    .hs-label { font-size: 0.8rem; color: var(--muted); text-align: right; max-width: 160px; line-height: 1.4; }
 
-    /* EXPERIENCE */
-    .timeline { position: relative; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 6px;
-      bottom: 0;
-      width: 1px;
-      background: var(--border);
+    /* ── DIVIDER ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
     }
+
+    /* ── SECTION SHELL ── */
+    .section { padding: 80px 0; }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* ── EXPERIENCE ── */
     .tl-item {
-      padding-left: 2rem;
-      padding-bottom: 2.5rem;
-      position: relative;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 2.5rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .tl-item:last-child { border-bottom: 1px solid var(--rule); }
+    .tl-meta {}
+    .tl-date { font-size: 0.78rem; color: var(--muted); letter-spacing: 0.03em; line-height: 1.5; }
+    .tl-dot-row {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-top: 0.5rem;
     }
     .tl-dot {
-      position: absolute;
-      left: -5px;
-      top: 6px;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: var(--accent);
-      border: 2px solid var(--bg);
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--rule);
+      border: 1px solid var(--muted2);
+      flex-shrink: 0;
     }
-    .tl-dot.current { background: var(--accent2); box-shadow: 0 0 0 3px rgba(86,207,178,0.2); }
-    .tl-date {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-bottom: 0.35rem;
-    }
+    .tl-dot.current { background: var(--gold); border-color: var(--gold); }
+    .tl-body {}
     .tl-role {
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      margin-bottom: 0.2rem;
     }
-    .tl-company {
-      color: var(--accent);
-      font-size: 0.95rem;
-      margin-bottom: 0.5rem;
-    }
-    .tl-desc {
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
+    .tl-company { font-size: 0.85rem; color: var(--gold); margin-bottom: 0.65rem; font-weight: 500; letter-spacing: 0.02em; }
+    .tl-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
 
-    /* PUBLICATIONS */
-    .pub-grid { display: grid; gap: 1.5rem; }
-    .pub-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.75rem;
-      transition: border-color 0.2s;
-      position: relative;
-      overflow: hidden;
+    /* ── PUBLICATIONS ── */
+    .pub-item {
+      padding: 2.25rem 0;
+      border-top: 1px solid var(--rule);
     }
-    .pub-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--accent);
-    }
-    .pub-card:hover { border-color: var(--accent); }
+    .pub-item:last-child { border-bottom: 1px solid var(--rule); }
+    .pub-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
     .pub-badge {
-      display: inline-block;
-      background: rgba(124,106,247,0.15);
-      color: var(--accent);
-      border: 1px solid rgba(124,106,247,0.3);
-      border-radius: 6px;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
       padding: 0.2rem 0.65rem;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-bottom: 0.75rem;
+      border-radius: 3px;
+      white-space: nowrap;
     }
-    .pub-badge.green {
-      background: rgba(86,207,178,0.15);
-      color: var(--accent2);
-      border-color: rgba(86,207,178,0.3);
-    }
+    .pub-badge.teal { color: #4a9e8a; border-color: #4a9e8a; }
+    .pub-venue { font-size: 0.8rem; color: var(--muted); }
     .pub-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+      line-height: 1.35;
     }
-    .pub-authors { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
-    .pub-venue { font-size: 0.85rem; color: var(--accent2); margin-bottom: 0.75rem; }
-    .pub-abstract { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
-    .pub-stats {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
+    .pub-authors { font-size: 0.82rem; color: var(--muted2); margin-bottom: 0.75rem; }
+    .pub-abstract { font-size: 0.88rem; color: var(--muted); line-height: 1.8; max-width: 760px; }
+    .pub-scores {
+      display: flex; gap: 2rem; margin-top: 1rem; flex-wrap: wrap;
     }
-    .pub-stat {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-    .pub-stat strong { color: var(--accent2); }
+    .pub-score { font-size: 0.8rem; }
+    .pub-score span { font-weight: 600; color: var(--ink); }
 
-    /* PROJECTS */
+    /* ── PROJECTS ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      overflow: hidden;
     }
     .project-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.5rem;
-      transition: all 0.2s;
+      padding: 1.75rem;
+      transition: background 0.2s;
     }
-    .project-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .project-icon {
-      font-size: 1.5rem;
+    .project-card:hover { background: #f0ece3; }
+    .project-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
       margin-bottom: 0.75rem;
     }
     .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .project-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 1rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .tag {
+      font-size: 0.7rem;
+      color: var(--muted2);
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-table { width: 100%; border-collapse: collapse; }
+    .skills-table tr { border-top: 1px solid var(--rule); }
+    .skills-table tr:last-child { border-bottom: 1px solid var(--rule); }
+    .skills-table td {
+      padding: 1.1rem 0;
+      vertical-align: top;
+    }
+    .skills-table td:first-child {
+      width: 180px;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding-right: 2rem;
+      font-weight: 500;
+    }
+    .skill-list {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .sk {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .sk::after { content: ' ·'; color: var(--rule); margin-left: 0.35rem; }
+    .sk:last-child::after { content: ''; }
+
+    /* ── EDUCATION ── */
+    .edu-item {
+      display: grid;
+      grid-template-columns: 160px 1fr auto;
+      gap: 2rem;
+      align-items: baseline;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--rule);
+    }
+    .edu-item:last-child { border-bottom: 1px solid var(--rule); }
+    .edu-year { font-size: 0.78rem; color: var(--muted); }
+    .edu-school {
+      font-family: 'Playfair Display', serif;
       font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
+      color: var(--ink);
+    }
+    .edu-degree { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+    .edu-grade { font-size: 0.85rem; color: var(--gold); font-weight: 500; }
+
+    /* ── CONTACT ── */
+    #contact { padding: 80px 0 100px; }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .contact-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+    .contact-sub { font-size: 0.92rem; color: var(--muted); line-height: 1.8; }
+    .contact-links { display: flex; flex-direction: column; gap: 0.75rem; padding-top: 0.5rem; }
+    .contact-link-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+    .contact-link-row:hover { border-color: var(--gold); color: var(--ink); }
+    .clr-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); min-width: 60px; }
+    .clr-value { color: var(--text); font-weight: 500; }
+
+    /* ── DAW TEASER BANNER ── */
+    .daw-banner {
+      margin: 0 0 0;
+      background: var(--ink);
+      border-top: 1px solid #2a2a2a;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 3rem 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .daw-banner-left {}
+    .daw-banner-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #c8a855;
+      margin-bottom: 0.5rem;
+    }
+    .daw-banner-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: #f0ece3;
       margin-bottom: 0.4rem;
     }
-    .project-desc {
-      font-size: 0.87rem;
-      color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag {
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 5px;
-    }
+    .daw-banner-sub { font-size: 0.85rem; color: #777; }
+    .daw-banner-right {}
 
-    /* SKILLS */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.25rem; }
-    .skill-group {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem;
-    }
-    .skill-group-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-    }
-    .skill-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .skill-pill {
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.82rem;
-      padding: 0.25rem 0.65rem;
-      border-radius: 6px;
-    }
-
-    /* EDUCATION */
-    .edu-grid { display: grid; gap: 1rem; }
-    .edu-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.25rem 1.5rem;
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem 6%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 1rem;
-    }
-    .edu-left {}
-    .edu-school { font-size: 1rem; font-weight: 600; color: var(--text); }
-    .edu-degree { font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
-    .edu-right { text-align: right; flex-shrink: 0; }
-    .edu-year { font-size: 0.82rem; color: var(--accent); }
-    .edu-grade { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
-
-    /* CONTACT */
-    #contact {
-      text-align: center;
-    }
-    .contact-bio {
-      color: var(--muted);
-      max-width: 500px;
-      margin: 0 auto 2.5rem;
-    }
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: var(--muted2);
+      max-width: 100%;
     }
 
-    /* FOOTER */
-    footer {
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 2rem 5%;
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 700px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .edu-card { flex-direction: column; align-items: flex-start; }
-      .edu-right { text-align: left; }
+    @media (max-width: 800px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .hero-right { display: none; }
+      .tl-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .edu-item { grid-template-columns: 1fr; gap: 0.25rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .nav-links { display: none; }
     }
   </style>
@@ -417,436 +433,371 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">SK</div>
+  <div class="nav-logo">Shubhankar Kamthankar</div>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#publications">Research</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><a href="daw.html" style="color:var(--gold);">BeatML ↗</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
-<section id="hero" style="padding-left:5%;padding-right:5%;">
-  <div class="hero-tag">
-    <span></span>
-    Open to opportunities
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Jr. AI Audio &amp; Speech Engineer &mdash; Miko</div>
+      <h1 class="hero-name">Shubhankar<br>Kamthankar</h1>
+      <p class="hero-role">Researcher in Computational Linguistics &amp; Speech AI</p>
+      <p class="hero-bio">
+        Published at IEEE WCNC 2026 and PAN&nbsp;@ CLEF&nbsp;2026 (4th globally).
+        Building audio intelligence systems for interactive AI at Miko.
+        Alumnus of IIIT&nbsp;Hyderabad, where I spent two years in the Speech Processing Lab
+        working on accented ASR.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="mailto:shubhankar.kam@gmail.com">Get in touch</a>
+        <a class="btn btn-ghost" href="https://github.com/So-bonkers" target="_blank">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/shubhankar-kamthankar-8ab0501b5/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat-stack">
+        <div class="hero-stat">
+          <span class="hs-num">2</span>
+          <span class="hs-label">Papers published in 2026</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hs-num">#4</span>
+          <span class="hs-label">PAN @ CLEF 2026 global leaderboard</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hs-num">0.993</span>
+          <span class="hs-label">Macro-F1 on easy split (style detection)</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hs-num">4×</span>
+          <span class="hs-label">Teaching assistant, IIIT Hyderabad</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <h1 class="hero-name">
-    Shubhankar<br><span class="highlight">Kamthankar</span>
-  </h1>
-  <p class="hero-title">Jr. AI Audio &amp; Speech Engineer &bull; Researcher &bull; He/Him</p>
-  <p class="hero-bio">
-    Building the future of audio &amp; speech AI. Currently at Miko, pushing the boundaries of interactive AI.
-    Researcher in computational linguistics and signal intelligence at IIIT Hyderabad —
-    published at IEEE WCNC 2026 and PAN @ CLEF 2026.
-  </p>
-  <div class="hero-links">
-    <a class="btn btn-primary" href="mailto:shubhankar.kam@gmail.com">
-      ✉ Get in touch
-    </a>
-    <a class="btn btn-outline" href="https://github.com/So-bonkers" target="_blank">
-      ⌥ GitHub
-    </a>
-    <a class="btn btn-outline" href="https://www.linkedin.com/in/shubhankar-kamthankar-8ab0501b5/" target="_blank">
-      ↗ LinkedIn
-    </a>
-  </div>
-  <p class="hero-scroll">scroll to explore</p>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label">About</p>
-  <h2 class="section-title">Who I am</h2>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>
-        I'm a speech &amp; audio AI engineer with a B.Tech + M.S in Computational Linguistics
-        from IIIT Hyderabad, where I spent two years as a student researcher in the
-        Speech Processing Lab working on ASR with Indian accent embeddings.
-      </p>
-      <p>
-        My work lives at the intersection of <strong>deep learning</strong>, <strong>speech processing</strong>,
-        and <strong>natural language understanding</strong>. I care about building systems that work
-        in the real world — messy accents, noisy channels, edge cases and all.
-      </p>
-      <p>
-        Outside of research I've shipped production ML systems at startups,
-        mentored students as a TA across four courses, and placed
-        <strong>4th globally</strong> in the PAN @ CLEF 2026 style change detection challenge.
-      </p>
-    </div>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-number">2</div>
-        <div class="stat-label">Published papers (2026)</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">#4</div>
-        <div class="stat-label">PAN @ CLEF 2026 leaderboard</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">4×</div>
-        <div class="stat-label">Teaching assistant, IIIT-H</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">0.993</div>
-        <div class="stat-label">Macro-F1 (easy split, PAN)</div>
-      </div>
-    </div>
+<!-- DAW BANNER -->
+<div class="daw-banner">
+  <div class="daw-banner-left">
+    <p class="daw-banner-eyebrow">New Project</p>
+    <h2 class="daw-banner-title">BeatML — a DAW that teaches as you create</h2>
+    <p class="daw-banner-sub">100% offline &bull; Free forever &bull; Open source</p>
   </div>
-</section>
+  <div class="daw-banner-right">
+    <a class="btn btn-gold" href="daw.html">See the project &rarr;</a>
+  </div>
+</div>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <p class="section-label">Experience</p>
-  <h2 class="section-title">Where I've worked</h2>
-  <div class="timeline">
-
-    <div class="tl-item">
-      <div class="tl-dot current"></div>
-      <p class="tl-date">Jun 2025 – Present</p>
-      <p class="tl-role">Jr. AI Audio &amp; Speech Engineer</p>
-      <p class="tl-company">Miko</p>
-      <p class="tl-desc">
-        Building speech AI systems for interactive children's robotics.
-        Working on audio intelligence, speech processing pipelines, and
-        AI-powered conversational experiences.
-      </p>
+<div class="wrap">
+  <section class="section" id="experience">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-rule"></div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-dot"></div>
-      <p class="tl-date">Mar 2025 – Jun 2025</p>
-      <p class="tl-role">ML Engineer Intern</p>
-      <p class="tl-company">MIVI</p>
-      <p class="tl-desc">
-        Built an agentic voice-based cab-booking framework integrating Uber and Ola
-        via speech recognition. Implemented in LangGraph and deployed into MIVI's
-        marketing product — enabling hands-free ride booking and increasing brand visibility.
-      </p>
+      <div class="tl-meta">
+        <p class="tl-date">Jun 2025<br>Present</p>
+        <div class="tl-dot-row"><div class="tl-dot current"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">Jr. AI Audio &amp; Speech Engineer</p>
+        <p class="tl-company">Miko</p>
+        <p class="tl-desc">Building speech AI systems for interactive children's robotics — speech processing pipelines, audio intelligence, and AI-powered conversational experiences.</p>
+      </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-dot"></div>
-      <p class="tl-date">Jun 2024 – Aug 2024</p>
-      <p class="tl-role">Core Researcher</p>
-      <p class="tl-company">Subtl.ai</p>
-      <p class="tl-desc">
-        Developed a question-generation and document recommendation feature for
-        uploaded documents and integrated it with the existing API stack.
-      </p>
+      <div class="tl-meta">
+        <p class="tl-date">Mar 2025<br>Jun 2025</p>
+        <div class="tl-dot-row"><div class="tl-dot"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">ML Engineer Intern</p>
+        <p class="tl-company">MIVI</p>
+        <p class="tl-desc">Built an agentic voice-based cab-booking framework over Uber and Ola using speech recognition, implemented in LangGraph and deployed into MIVI's marketing product.</p>
+      </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-dot"></div>
-      <p class="tl-date">Dec 2023 – Oct 2024</p>
-      <p class="tl-role">Deep Learning Intern</p>
-      <p class="tl-company">Proxzar</p>
-      <p class="tl-desc">
-        Designed a reverse image search engine. Built a universal document converter
-        using Docling for DOCX, PDF, PNG, XML, ASCIIDOC → JSON, used for
-        dataset generation and RAG querying.
-      </p>
+      <div class="tl-meta">
+        <p class="tl-date">Jun 2024<br>Aug 2024</p>
+        <div class="tl-dot-row"><div class="tl-dot"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">Core Researcher</p>
+        <p class="tl-company">Subtl.ai</p>
+        <p class="tl-desc">Developed a question-generation and document recommendation feature, integrated with the existing API stack.</p>
+      </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-dot"></div>
-      <p class="tl-date">May 2022 – Dec 2024</p>
-      <p class="tl-role">Student Researcher — Speech Processing Lab</p>
-      <p class="tl-company">IIIT Hyderabad</p>
-      <p class="tl-desc">
-        Contributed to improving ASR performance by incorporating Indian accents and
-        accent embeddings. Research led to a publication accepted at IEEE WCNC 2026.
-      </p>
+      <div class="tl-meta">
+        <p class="tl-date">Dec 2023<br>Oct 2024</p>
+        <div class="tl-dot-row"><div class="tl-dot"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">Deep Learning Intern</p>
+        <p class="tl-company">Proxzar</p>
+        <p class="tl-desc">Designed a reverse image search engine. Built a universal document converter using Docling — DOCX, PDF, PNG, XML → JSON for dataset generation and querying.</p>
+      </div>
     </div>
 
     <div class="tl-item">
-      <div class="tl-dot"></div>
-      <p class="tl-date">2022 – 2024</p>
-      <p class="tl-role">Teaching Assistant ×4</p>
-      <p class="tl-company">IIIT Hyderabad</p>
-      <p class="tl-desc">
-        Courses: Language &amp; Society, Introduction to Linguistics,
-        Speech Analysis, E-MSIT.
-      </p>
+      <div class="tl-meta">
+        <p class="tl-date">May 2022<br>Dec 2024</p>
+        <div class="tl-dot-row"><div class="tl-dot"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">Student Researcher — Speech Processing Lab</p>
+        <p class="tl-company">IIIT Hyderabad</p>
+        <p class="tl-desc">Improved ASR performance by incorporating Indian accents and accent embeddings. Research contributed to a publication accepted at IEEE WCNC 2026.</p>
+      </div>
     </div>
 
-  </div>
-</section>
+    <div class="tl-item">
+      <div class="tl-meta">
+        <p class="tl-date">2022<br>2024</p>
+        <div class="tl-dot-row"><div class="tl-dot"></div></div>
+      </div>
+      <div class="tl-body">
+        <p class="tl-role">Teaching Assistant ×4</p>
+        <p class="tl-company">IIIT Hyderabad</p>
+        <p class="tl-desc">Language &amp; Society, Introduction to Linguistics, Speech Analysis, E-MSIT.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr class="section-divider">
 
 <!-- PUBLICATIONS -->
-<section id="publications">
-  <p class="section-label">Research</p>
-  <h2 class="section-title">Publications</h2>
-  <div class="pub-grid">
+<div class="wrap">
+  <section class="section" id="publications">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Research</h2>
+      <div class="section-rule"></div>
+    </div>
 
-    <div class="pub-card">
-      <span class="pub-badge">IEEE WCNC 2026 · Accepted</span>
+    <div class="pub-item">
+      <div class="pub-meta">
+        <span class="pub-badge">Accepted</span>
+        <span class="pub-venue">IEEE WCNC 2026</span>
+      </div>
       <h3 class="pub-title">Detecting Convolutional Codes via a Markovian Statistic</h3>
-      <p class="pub-authors">Shubhankar Kamthankar, Guneesh Vats, Arti Yardi</p>
-      <p class="pub-venue">IEEE Wireless Communications and Networking Conference 2026</p>
+      <p class="pub-authors">Shubhankar Kamthankar, Guneesh Vats, Arti Yardi &mdash; IIIT Hyderabad</p>
       <p class="pub-abstract">
-        A novel Markov chain-based framework for detecting convolutional codes in noisy
-        intercepted data. We decode received data via the Viterbi algorithm and model the
-        resulting metric sequence as a Markov chain, reducing code detection to hypothesis
-        testing between two MCs. Provides analytical asymptotic guarantees via error exponents
-        and outperforms the syndrome-former baseline — e.g. achieving P<sub>err</sub> ≈ 0
-        vs 0.41 at N=500, p=0.2.
+        A novel Markov chain framework for blind detection of convolutional codes in noisy intercepted data.
+        The Viterbi metric sequence is modelled as a Markov chain; code detection becomes hypothesis testing
+        between two MCs. Provides closed-form asymptotic guarantees via error exponents. Outperforms the
+        syndrome-former baseline — P<sub>err</sub> ≈ 0 vs 0.41 at N = 500, p = 0.2.
       </p>
-      <div class="pub-stats">
-        <span class="pub-stat">Method: <strong>Viterbi + Markov hypothesis test</strong></span>
-        <span class="pub-stat">Channel: <strong>BSC</strong></span>
-      </div>
     </div>
 
-    <div class="pub-card">
-      <span class="pub-badge green">PAN @ CLEF 2026 · 4th Place</span>
+    <div class="pub-item">
+      <div class="pub-meta">
+        <span class="pub-badge teal">4th Place</span>
+        <span class="pub-venue">PAN @ CLEF 2026</span>
+      </div>
       <h3 class="pub-title">Multi-Encoder Ensemble with Sequential BiLSTM Refinement for Style Change Detection</h3>
-      <p class="pub-authors">Shubhankar Kamthankar, Arti Yardi</p>
-      <p class="pub-venue">CLEF 2026 Working Notes — PAN Multi-Author Writing Style Analysis Shared Task</p>
+      <p class="pub-authors">Shubhankar Kamthankar, Arti Yardi &mdash; IIIT Hyderabad</p>
       <p class="pub-abstract">
-        A four-stage sentence-level authorship-change detection pipeline: (1) CoSENT fine-tuning
-        of DeBERTa-v3, RoBERTa-large, and MPNet-base for style-sensitive embeddings;
-        (2) difficulty-adaptive MLP classifiers with Focal BCE + R-Drop;
-        (3) Optuna-optimised ensemble fusion; (4) BiLSTM document-level refinement
-        over complete boundary sequences.
+        Four-stage sentence-level authorship-change detection: CoSENT fine-tuning of DeBERTa-v3, RoBERTa-large,
+        and MPNet-base; difficulty-adaptive MLP classifiers with Focal BCE + R-Drop; Optuna ensemble fusion;
+        document-level BiLSTM refinement over full boundary sequences.
       </p>
-      <div class="pub-stats">
-        <span class="pub-stat">Easy F1: <strong>0.9930</strong></span>
-        <span class="pub-stat">Medium F1: <strong>0.7218</strong></span>
-        <span class="pub-stat">Hard F1: <strong>0.7573</strong></span>
+      <div class="pub-scores">
+        <p class="pub-score">Easy: <span>0.9930</span></p>
+        <p class="pub-score">Medium: <span>0.7218</span></p>
+        <p class="pub-score">Hard: <span>0.7573</span></p>
+        <p class="pub-score">Macro-F1 on hidden test set</p>
       </div>
     </div>
+  </section>
+</div>
 
-  </div>
-</section>
+<hr class="section-divider">
 
 <!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label">Projects</p>
-  <h2 class="section-title">Things I've built</h2>
-  <div class="projects-grid">
-
-    <div class="project-card">
-      <div class="project-icon">👗</div>
-      <p class="project-name">Stylr</p>
-      <p class="project-desc">
-        Fashion-apparel shopping app with outfit recommendations based on users' wardrobes.
-        Tinder-style swipe interface. The AppReMo CV model was trained on Flipkart 500K
-        to detect apparel type &amp; color.
-      </p>
-      <div class="tags">
-        <span class="tag">MERN</span>
-        <span class="tag">Computer Vision</span>
-        <span class="tag">PyTorch</span>
-        <span class="tag">Heroku</span>
+<div class="wrap">
+  <section class="section" id="projects">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <p class="project-num">001</p>
+        <p class="project-name">Stylr</p>
+        <p class="project-desc">Fashion-apparel shopping app with outfit recommendations from your own wardrobe. Tinder-style UI. AppReMo trained on Flipkart 500K to detect apparel type &amp; color.</p>
+        <div class="tags"><span class="tag">MERN</span><span class="tag">Computer Vision</span><span class="tag">PyTorch</span></div>
+      </div>
+      <div class="project-card">
+        <p class="project-num">002</p>
+        <p class="project-name">Digit Recognition ASR</p>
+        <p class="project-desc">Spoken English numerals → Hindi text + audio, via an MT + TTS pipeline built on top of a custom ASR system.</p>
+        <div class="tags"><span class="tag">Speech</span><span class="tag">ASR</span><span class="tag">MT</span><span class="tag">TTS</span></div>
+      </div>
+      <div class="project-card">
+        <p class="project-num">003</p>
+        <p class="project-name">Canteen Portal</p>
+        <p class="project-desc">Real-time canteen order and transaction tracking for IIIT Hyderabad. MERN stack.</p>
+        <div class="tags"><span class="tag">MERN</span><span class="tag">Real-time</span></div>
+      </div>
+      <div class="project-card">
+        <p class="project-num">004</p>
+        <p class="project-name">C Shell / Xv6</p>
+        <p class="project-desc">Custom syscalls for process scheduling, I/O management, and networking in a Unix-like kernel.</p>
+        <div class="tags"><span class="tag">C</span><span class="tag">OS</span><span class="tag">Systems</span></div>
+      </div>
+      <div class="project-card">
+        <p class="project-num">005</p>
+        <p class="project-name">Text Style Transfer</p>
+        <p class="project-desc">Reproduced "Text Detoxification using Large Pre-trained Neural Models."</p>
+        <div class="tags"><span class="tag">NLP</span><span class="tag">Transformers</span></div>
+      </div>
+      <div class="project-card">
+        <p class="project-num">006</p>
+        <p class="project-name">LSTM Blogs</p>
+        <p class="project-desc">Technical blog series analysing RNNs, LSTMs, and sequence modelling trade-offs.</p>
+        <div class="tags"><span class="tag">Writing</span><span class="tag">Deep Learning</span></div>
       </div>
     </div>
+  </section>
+</div>
 
-    <div class="project-card">
-      <div class="project-icon">🎙️</div>
-      <p class="project-name">Digit Recognition ASR</p>
-      <p class="project-desc">
-        ASR system that recognises spoken English numerals and outputs Hindi text
-        and audio via an MT + TTS pipeline.
-      </p>
-      <div class="tags">
-        <span class="tag">Deep Learning</span>
-        <span class="tag">Speech Processing</span>
-        <span class="tag">Machine Translation</span>
-        <span class="tag">TTS</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">🍽️</div>
-      <p class="project-name">Canteen Portal</p>
-      <p class="project-desc">
-        Real-time canteen order and transaction tracking web app built for IIIT Hyderabad.
-      </p>
-      <div class="tags">
-        <span class="tag">MERN</span>
-        <span class="tag">Real-time</span>
-        <span class="tag">MongoDB</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">🖥️</div>
-      <p class="project-name">C Shell / Xv6</p>
-      <p class="project-desc">
-        Implemented custom syscalls for process scheduling, I/O management,
-        and networking in a Unix-like OS kernel.
-      </p>
-      <div class="tags">
-        <span class="tag">C</span>
-        <span class="tag">OS</span>
-        <span class="tag">Systems</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">✍️</div>
-      <p class="project-name">Text Style Transfer</p>
-      <p class="project-desc">
-        Reproduced results from "Text Detoxification using Large Pre-trained Neural Models."
-      </p>
-      <div class="tags">
-        <span class="tag">NLP</span>
-        <span class="tag">Transformers</span>
-        <span class="tag">PyTorch</span>
-      </div>
-    </div>
-
-    <div class="project-card">
-      <div class="project-icon">📝</div>
-      <p class="project-name">LSTM Blogs</p>
-      <p class="project-desc">
-        Authored a technical blog series analysing RNNs, LSTMs, and
-        sequence modelling performance.
-      </p>
-      <div class="tags">
-        <span class="tag">Writing</span>
-        <span class="tag">Deep Learning</span>
-        <span class="tag">Education</span>
-      </div>
-    </div>
-
-  </div>
-</section>
+<hr class="section-divider">
 
 <!-- SKILLS -->
-<section id="skills">
-  <p class="section-label">Skills</p>
-  <h2 class="section-title">Tech stack</h2>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <p class="skill-group-title">Languages</p>
-      <div class="skill-pills">
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">C/C++</span>
-        <span class="skill-pill">TypeScript</span>
-        <span class="skill-pill">BASH</span>
-        <span class="skill-pill">R</span>
-      </div>
+<div class="wrap">
+  <section class="section" id="skills">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-rule"></div>
     </div>
-    <div class="skill-group">
-      <p class="skill-group-title">ML / DL Frameworks</p>
-      <div class="skill-pills">
-        <span class="skill-pill">PyTorch</span>
-        <span class="skill-pill">TensorFlow</span>
-        <span class="skill-pill">Keras</span>
-        <span class="skill-pill">scikit-learn</span>
-        <span class="skill-pill">LangGraph</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <p class="skill-group-title">Speech &amp; Audio</p>
-      <div class="skill-pills">
-        <span class="skill-pill">Kaldi</span>
-        <span class="skill-pill">SpeechBrain</span>
-        <span class="skill-pill">Wavesurfer</span>
-        <span class="skill-pill">ASR</span>
-        <span class="skill-pill">TTS</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <p class="skill-group-title">Web &amp; Backend</p>
-      <div class="skill-pills">
-        <span class="skill-pill">Node.js</span>
-        <span class="skill-pill">Flask</span>
-        <span class="skill-pill">React</span>
-        <span class="skill-pill">MongoDB</span>
-        <span class="skill-pill">MySQL</span>
-        <span class="skill-pill">Milvus</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <p class="skill-group-title">Tools &amp; OS</p>
-      <div class="skill-pills">
-        <span class="skill-pill">Git</span>
-        <span class="skill-pill">GNU/Linux</span>
-        <span class="skill-pill">Vim</span>
-        <span class="skill-pill">Docker</span>
-        <span class="skill-pill">Markdown</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <p class="skill-group-title">Research Areas</p>
-      <div class="skill-pills">
-        <span class="skill-pill">Speech Processing</span>
-        <span class="skill-pill">Comp. Linguistics</span>
-        <span class="skill-pill">NLP</span>
-        <span class="skill-pill">Channel Coding</span>
-        <span class="skill-pill">Computer Vision</span>
-      </div>
-    </div>
-  </div>
-</section>
+    <table class="skills-table">
+      <tr>
+        <td>Languages</td>
+        <td><div class="skill-list">
+          <span class="sk">Python</span><span class="sk">C/C++</span><span class="sk">TypeScript</span><span class="sk">BASH</span><span class="sk">R</span>
+        </div></td>
+      </tr>
+      <tr>
+        <td>ML / DL</td>
+        <td><div class="skill-list">
+          <span class="sk">PyTorch</span><span class="sk">TensorFlow</span><span class="sk">Keras</span><span class="sk">scikit-learn</span><span class="sk">LangGraph</span>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Speech &amp; Audio</td>
+        <td><div class="skill-list">
+          <span class="sk">Kaldi</span><span class="sk">SpeechBrain</span><span class="sk">Wavesurfer</span><span class="sk">ASR</span><span class="sk">TTS</span>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Web / Backend</td>
+        <td><div class="skill-list">
+          <span class="sk">Node.js</span><span class="sk">Flask</span><span class="sk">React</span><span class="sk">MongoDB</span><span class="sk">MySQL</span><span class="sk">Milvus</span>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Tools &amp; OS</td>
+        <td><div class="skill-list">
+          <span class="sk">Git</span><span class="sk">GNU/Linux</span><span class="sk">Vim</span><span class="sk">Markdown</span>
+        </div></td>
+      </tr>
+      <tr>
+        <td>Research</td>
+        <td><div class="skill-list">
+          <span class="sk">Speech Processing</span><span class="sk">Comp. Linguistics</span><span class="sk">NLP</span><span class="sk">Channel Coding</span><span class="sk">Computer Vision</span>
+        </div></td>
+      </tr>
+    </table>
+  </section>
+</div>
+
+<hr class="section-divider">
 
 <!-- EDUCATION -->
-<section id="education">
-  <p class="section-label">Education</p>
-  <h2 class="section-title">Academic background</h2>
-  <div class="edu-grid">
-    <div class="edu-card">
-      <div class="edu-left">
-        <p class="edu-school">IIIT Hyderabad</p>
-        <p class="edu-degree">B.Tech + M.S in Computational Linguistics · CLD</p>
-      </div>
-      <div class="edu-right">
-        <p class="edu-year">2020 – 2024</p>
-      </div>
+<div class="wrap">
+  <section class="section" id="education">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Education</h2>
+      <div class="section-rule"></div>
     </div>
-    <div class="edu-card">
-      <div class="edu-left">
+    <div class="edu-item">
+      <p class="edu-year">2020 &ndash; 2024</p>
+      <div>
+        <p class="edu-school">IIIT Hyderabad</p>
+        <p class="edu-degree">B.Tech + M.S in Computational Linguistics &middot; CLD</p>
+      </div>
+      <p class="edu-grade">&nbsp;</p>
+    </div>
+    <div class="edu-item">
+      <p class="edu-year">2018 &ndash; 2020</p>
+      <div>
         <p class="edu-school">KPC Junior College, Kharghar</p>
         <p class="edu-degree">HSC (Class XII)</p>
       </div>
-      <div class="edu-right">
-        <p class="edu-year">2018 – 2020</p>
-        <p class="edu-grade">81.3%</p>
-      </div>
+      <p class="edu-grade">81.3%</p>
     </div>
-    <div class="edu-card">
-      <div class="edu-left">
+    <div class="edu-item">
+      <p class="edu-year">2017 &ndash; 2018</p>
+      <div>
         <p class="edu-school">DAV International, Kharghar</p>
         <p class="edu-degree">SSC (Class X)</p>
       </div>
-      <div class="edu-right">
-        <p class="edu-year">2017 – 2018</p>
-        <p class="edu-grade">94.8%</p>
-      </div>
+      <p class="edu-grade">94.8%</p>
     </div>
-  </div>
-</section>
+  </section>
+</div>
+
+<hr class="section-divider">
 
 <!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Contact</p>
-  <h2 class="section-title">Let's talk</h2>
-  <p class="contact-bio">
-    Whether it's a research collaboration, an interesting problem in speech AI,
-    or just a conversation — my inbox is open.
-  </p>
-  <div class="contact-links">
-    <a class="btn btn-primary" href="mailto:shubhankar.kam@gmail.com">
-      ✉ shubhankar.kam@gmail.com
-    </a>
-    <a class="btn btn-outline" href="https://github.com/So-bonkers" target="_blank">
-      GitHub · So-bonkers
-    </a>
-    <a class="btn btn-outline" href="https://www.linkedin.com/in/shubhankar-kamthankar-8ab0501b5/" target="_blank">
-      LinkedIn
-    </a>
-  </div>
-</section>
+<div class="wrap">
+  <section id="contact">
+    <div class="contact-inner">
+      <div>
+        <h2 class="contact-heading">Let's build<br><em>something</em>.</h2>
+        <p class="contact-sub">Research collaborations, interesting problems in speech AI, or just a conversation — reach out through any of the channels below.</p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link-row" href="mailto:shubhankar.kam@gmail.com">
+          <span class="clr-label">Email</span>
+          <span class="clr-value">shubhankar.kam@gmail.com</span>
+        </a>
+        <a class="contact-link-row" href="https://github.com/So-bonkers" target="_blank">
+          <span class="clr-label">GitHub</span>
+          <span class="clr-value">So-bonkers</span>
+        </a>
+        <a class="contact-link-row" href="https://www.linkedin.com/in/shubhankar-kamthankar-8ab0501b5/" target="_blank">
+          <span class="clr-label">LinkedIn</span>
+          <span class="clr-value">Shubhankar Kamthankar</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
 
 <footer>
-  <p>Built by Shubhankar Kamthankar &mdash; 2026</p>
+  <span>Shubhankar Kamthankar &mdash; 2026</span>
+  <a href="daw.html" style="color:var(--gold);">BeatML Project &rarr;</a>
 </footer>
 
 </body>
