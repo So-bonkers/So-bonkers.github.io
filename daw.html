@@ -5,460 +5,274 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>EchoForge — Codename</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
     :root {
       --bg:      #07091a;
-      --surface: #0d1030;
-      --surface2:#111438;
-      --border:  #1e2050;
-      --border2: #2a2e68;
-      --violet:  #7c6af7;
-      --violet2: #a898ff;
+      --s1:      #0d1030;
+      --s2:      #111438;
+      --b1:      #1e2050;
+      --b2:      #2a2e68;
+      --v:       #7c6af7;
+      --v2:      #a898ff;
       --teal:    #3ecfb0;
       --amber:   #f0a030;
       --pink:    #e060a8;
+      --red:     #e06040;
+      --blue:    #4a8ef0;
       --text:    #dddaf8;
       --muted:   #6860a8;
       --muted2:  #3a3870;
     }
-
     *{margin:0;padding:0;box-sizing:border-box;}
     html{scroll-behavior:smooth;}
-    body{
-      background:var(--bg);
-      color:var(--text);
-      font-family:'Inter',system-ui,sans-serif;
-      font-size:16px;
-      line-height:1.7;
-      overflow-x:hidden;
-    }
-    a{color:var(--violet);text-decoration:none;}
-    a:hover{color:var(--violet2);}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+    a{color:var(--v);text-decoration:none;}
+    a:hover{color:var(--v2);}
 
-    /* ── STARFIELD ── */
-    #stars-canvas{
-      position:fixed;top:0;left:0;width:100%;height:100%;
-      z-index:0;pointer-events:none;
-    }
+    /* ── STARS ── */
+    #stars{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 
     /* ── NAV ── */
     nav{
       position:fixed;top:0;left:0;right:0;z-index:100;
       display:flex;justify-content:space-between;align-items:center;
       padding:0 6%;height:56px;
-      background:rgba(7,9,26,0.85);
-      backdrop-filter:blur(16px);
-      border-bottom:1px solid var(--border);
+      background:rgba(7,9,26,0.88);backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--b1);
     }
-    .nav-logo{
-      font-family:'JetBrains Mono',monospace;
-      font-size:0.9rem;font-weight:500;
-      color:var(--violet2);letter-spacing:0.05em;
-    }
-    .nav-back{
-      font-size:0.78rem;letter-spacing:0.08em;
-      text-transform:uppercase;color:var(--muted);transition:color .2s;
-    }
+    .nav-logo{font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:500;color:var(--v2);letter-spacing:.05em;}
+    .nav-right{display:flex;align-items:center;gap:1.5rem;}
+    .nav-links{display:flex;gap:2rem;list-style:none;}
+    .nav-links a{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+    .nav-links a:hover{color:var(--text);}
+    .nav-back{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
     .nav-back:hover{color:var(--text);}
+
+    /* ── BTN ── */
+    .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.6rem;font-size:.85rem;font-weight:600;letter-spacing:.04em;border-radius:6px;cursor:pointer;transition:all .2s;}
+    .btn-v{background:var(--v);color:#fff;border:1px solid var(--v);}
+    .btn-v:hover{background:var(--v2);border-color:var(--v2);color:#fff;}
+    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--b2);}
+    .btn-ghost:hover{border-color:var(--v);color:var(--v2);}
 
     /* ── HERO ── */
     #hero{
-      position:relative;z-index:1;
-      min-height:100vh;
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;
-      padding:80px 6% 60px;
-      text-align:center;
+      position:relative;z-index:1;min-height:100vh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:80px 6% 60px;text-align:center;
     }
-    .codename-tag{
-      font-family:'JetBrains Mono',monospace;
-      font-size:0.72rem;letter-spacing:0.2em;
-      text-transform:uppercase;
-      color:var(--muted);
-      border:1px solid var(--border2);
-      background:rgba(124,106,247,0.06);
-      padding:0.3rem 1rem;border-radius:100px;
-      margin-bottom:2.5rem;
+    .codename-chip{
+      font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--muted);border:1px solid var(--b2);background:rgba(124,106,247,.06);
+      padding:.3rem 1rem;border-radius:100px;margin-bottom:2.5rem;
+      display:inline-flex;align-items:center;gap:.6rem;
     }
-    .daw-art-wrap{
-      width:100%;max-width:820px;margin:0 auto 2.5rem;
-      filter:drop-shadow(0 0 60px rgba(100,80,220,0.25));
-    }
-    .daw-art{width:100%;height:auto;}
+    .chip-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-    /* playhead animation */
-    #ph-line,#ph-arrow{
-      animation:ph-move 7s linear infinite;
-    }
-    @keyframes ph-move{
-      0%  {transform:translateX(-120px);}
-      100%{transform:translateX(220px);}
-    }
-
-    /* mixer bar animations */
+    /* DAW SVG art */
+    .daw-wrap{width:100%;max-width:800px;margin:0 auto 2.5rem;filter:drop-shadow(0 0 55px rgba(100,80,220,.28));}
+    .daw-wrap svg{width:100%;height:auto;}
+    #ph-g{animation:ph 7s linear infinite;}
+    @keyframes ph{0%{transform:translateX(-120px)}100%{transform:translateX(215px)}}
     .mb{transform-box:fill-box;transform-origin:bottom center;}
-    #mb1{animation:mb1 1.8s ease-in-out infinite;}
-    #mb2{animation:mb2 2.1s ease-in-out infinite;}
-    #mb3{animation:mb3 1.5s ease-in-out infinite;}
-    #mb4{animation:mb4 2.4s ease-in-out infinite;}
-    #mb5{animation:mb5 1.9s ease-in-out infinite;}
-    @keyframes mb1{0%,100%{transform:scaleY(1)}   50%{transform:scaleY(.55)}}
-    @keyframes mb2{0%,100%{transform:scaleY(.8)}  50%{transform:scaleY(1.15)}}
-    @keyframes mb3{0%,100%{transform:scaleY(1)}   50%{transform:scaleY(.45)}}
-    @keyframes mb4{0%,100%{transform:scaleY(.9)}  50%{transform:scaleY(.6)}}
-    @keyframes mb5{0%,100%{transform:scaleY(.7)}  50%{transform:scaleY(1.05)}}
+    #mb1{animation:mba 1.8s ease-in-out infinite;}
+    #mb2{animation:mbb 2.1s ease-in-out infinite;}
+    #mb3{animation:mbc 1.5s ease-in-out infinite;}
+    #mb4{animation:mbd 2.4s ease-in-out infinite;}
+    #mb5{animation:mbe 1.9s ease-in-out infinite;}
+    @keyframes mba{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.55)}}
+    @keyframes mbb{0%,100%{transform:scaleY(.8)}50%{transform:scaleY(1.15)}}
+    @keyframes mbc{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.45)}}
+    @keyframes mbd{0%,100%{transform:scaleY(.9)}50%{transform:scaleY(.6)}}
+    @keyframes mbe{0%,100%{transform:scaleY(.7)}50%{transform:scaleY(1.05)}}
+    #wv{animation:wg 2.2s ease-in-out infinite;}
+    @keyframes wg{0%,100%{opacity:.65}50%{opacity:1;filter:drop-shadow(0 0 5px #3ecfb0)}}
 
-    /* waveform glow */
-    #waveform-line{animation:wglow 2s ease-in-out infinite;}
-    @keyframes wglow{0%,100%{opacity:.65;filter:none}50%{opacity:1;filter:drop-shadow(0 0 5px #3ecfb0)}}
-
-    .hero-title{
-      font-size:clamp(3.5rem,9vw,7rem);
-      font-weight:900;
-      letter-spacing:-0.03em;
-      line-height:1;
-      color:#fff;
-      margin-bottom:.75rem;
-    }
-    .hero-title .glow{
-      background:linear-gradient(135deg,var(--violet2) 0%,var(--teal) 100%);
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    }
-    .hero-version{
-      font-family:'JetBrains Mono',monospace;
-      font-size:.82rem;color:var(--muted);
-      letter-spacing:.06em;margin-bottom:.5rem;
-    }
-    .hero-tagline{
-      font-size:.9rem;color:var(--muted);
-      letter-spacing:.04em;margin-bottom:2.5rem;
-    }
-    .hero-tagline span{color:var(--muted2);margin:0 .5rem;}
+    .hero-title{font-size:clamp(3.5rem,9vw,7rem);font-weight:900;letter-spacing:-.03em;line-height:1;color:#fff;margin-bottom:.75rem;}
+    .hero-title .g{background:linear-gradient(135deg,var(--v2) 0%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-ver{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--muted);letter-spacing:.06em;margin-bottom:.5rem;}
+    .hero-tag2{font-size:.9rem;color:var(--muted);letter-spacing:.03em;margin-bottom:2.5rem;}
+    .hero-tag2 span{color:var(--muted2);margin:0 .4rem;}
     .hero-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:.6rem;margin-bottom:2.5rem;}
-    .pill{
-      font-size:.72rem;font-weight:500;letter-spacing:.07em;
-      padding:.3rem .85rem;border-radius:100px;
-      border:1px solid var(--border2);color:var(--muted);
-      transition:all .2s;
-    }
-    .pill:hover,.pill.lit{border-color:var(--violet);color:var(--violet2);background:rgba(124,106,247,.08);}
+    .pill{font-size:.72rem;font-weight:500;letter-spacing:.07em;padding:.3rem .85rem;border-radius:100px;border:1px solid var(--b2);color:var(--muted);transition:all .2s;cursor:default;}
+    .pill.lit{border-color:var(--v);color:var(--v2);background:rgba(124,106,247,.08);}
     .hero-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+    .scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);animation:bob 2s ease-in-out infinite;}
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(5px)}}
 
-    .btn{
-      display:inline-flex;align-items:center;gap:.5rem;
-      padding:.72rem 1.6rem;font-size:.85rem;font-weight:600;
-      letter-spacing:.04em;border-radius:6px;cursor:pointer;transition:all .2s;
-    }
-    .btn-violet{background:var(--violet);color:#fff;border:1px solid var(--violet);}
-    .btn-violet:hover{background:var(--violet2);border-color:var(--violet2);color:#fff;}
-    .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border2);}
-    .btn-ghost:hover{border-color:var(--violet);color:var(--violet2);}
+    /* ── SECTION ── */
+    .sec{position:relative;z-index:1;padding:80px 6%;border-top:1px solid var(--b1);max-width:1100px;margin:0 auto;}
+    .sec.wide{max-width:none;}
+    .s-ey{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--v);margin-bottom:.6rem;}
+    .s-tt{font-size:clamp(1.7rem,3vw,2.3rem);font-weight:800;color:#fff;margin-bottom:.75rem;letter-spacing:-.02em;}
+    .s-sub{font-size:.92rem;color:var(--muted);max-width:560px;line-height:1.85;margin-bottom:3rem;font-weight:300;}
 
-    /* ── SCROLL MARKER ── */
-    .scroll-cue{
-      position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
-      display:flex;flex-direction:column;align-items:center;gap:.4rem;
-      font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);
-      animation:bob 2s ease-in-out infinite;
-    }
-    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
-    .scroll-cue svg{opacity:.4;}
-
-    /* ── GENERIC SECTION ── */
-    .section{
-      position:relative;z-index:1;
-      padding:80px 6%;
-      border-top:1px solid var(--border);
-      max-width:1100px;margin:0 auto;
-    }
-    .full-bleed{max-width:none;padding-left:6%;padding-right:6%;}
-    .s-eyebrow{
-      font-family:'JetBrains Mono',monospace;
-      font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;
-      color:var(--violet);margin-bottom:.6rem;
-    }
-    .s-title{
-      font-size:clamp(1.6rem,3vw,2.2rem);
-      font-weight:700;color:#fff;
-      margin-bottom:.75rem;letter-spacing:-.02em;
-    }
-    .s-intro{font-size:.92rem;color:var(--muted);max-width:560px;line-height:1.85;margin-bottom:3rem;font-weight:300;}
-
-    /* ── HOOKS ── */
-    #hooks-section{border-top:1px solid var(--border);}
-    .hook{
-      position:relative;z-index:1;
-      display:grid;grid-template-columns:64px 1fr;gap:2rem;
-      align-items:start;padding:2.5rem 6%;
-      border-bottom:1px solid var(--border);
-      max-width:1100px;margin:0 auto;
-      transition:background .25s;
-      cursor:default;
-    }
-    .hook:hover{background:rgba(124,106,247,.04);}
-    .hook-num{
-      font-family:'JetBrains Mono',monospace;
-      font-size:1.8rem;font-weight:700;
-      color:var(--border2);line-height:1;
-      padding-top:.2rem;
-      transition:color .25s;
-    }
-    .hook:hover .hook-num{color:var(--violet);}
-    .hook-text{
-      font-size:clamp(1.1rem,2.2vw,1.5rem);
-      font-weight:700;color:#fff;line-height:1.3;
-    }
-    .hook-text .hl{color:var(--violet2);}
-    .hook-text .hl-teal{color:var(--teal);}
-    .hook-text .hl-amber{color:var(--amber);}
-    .hook-sub{
-      font-size:.87rem;color:var(--muted);
-      margin-top:.5rem;font-weight:300;line-height:1.75;
-    }
-
-    /* ── DEMO SECTION ── */
-    #demo{
-      position:relative;z-index:1;
-      padding:80px 6%;border-top:1px solid var(--border);
-    }
-    .demo-wrap{max-width:1100px;margin:0 auto;}
-    .demo-stage{
-      background:var(--surface);
-      border:1px solid var(--border2);
-      border-radius:14px;
-      padding:2.5rem;
+    /* ── PILLAR CARDS ── */
+    .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:12px;overflow:hidden;}
+    .pillar{
+      background:var(--s1);padding:2.25rem;transition:background .2s;
       position:relative;overflow:hidden;
     }
-    .demo-stage::before{
-      content:'';position:absolute;top:0;left:0;right:0;height:1px;
-      background:linear-gradient(90deg,transparent,var(--violet),transparent);
-    }
-    .demo-label{
-      font-family:'JetBrains Mono',monospace;
-      font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-      color:var(--muted);margin-bottom:1.5rem;
-    }
-    .demo-row{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start;}
-    .demo-left{}
-    .demo-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
-    .demo-desc{font-size:.88rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem;}
-    .mic-btn{
-      display:inline-flex;align-items:center;gap:.6rem;
-      background:rgba(124,106,247,.15);
-      border:1px solid var(--violet);
-      color:var(--violet2);
-      padding:.75rem 1.5rem;
-      border-radius:100px;
-      font-size:.9rem;font-weight:600;
-      cursor:pointer;transition:all .2s;
-      font-family:'Inter',sans-serif;
-    }
-    .mic-btn:hover{background:rgba(124,106,247,.25);}
-    .mic-btn.active{background:var(--violet);color:#fff;animation:pulse-ring 1s ease-out infinite;}
-    @keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(124,106,247,.6)}100%{box-shadow:0 0 0 14px rgba(124,106,247,0)}}
-    .mic-icon{font-size:1.1rem;}
+    .pillar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+    .pillar:nth-child(1)::before{background:var(--v);}
+    .pillar:nth-child(2)::before{background:var(--teal);}
+    .pillar:nth-child(3)::before{background:var(--amber);}
+    .pillar:hover{background:var(--s2);}
+    .pillar-icon{font-size:1.8rem;margin-bottom:1rem;}
+    .pillar-title{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.5rem;}
+    .pillar-desc{font-size:.86rem;color:var(--muted);line-height:1.75;}
+    .pillar-stat{margin-top:1.25rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--v2);}
 
-    /* audio bars */
-    .audio-bars{
-      display:flex;align-items:flex-end;gap:4px;
-      height:60px;margin-top:1.25rem;
-      opacity:0;transition:opacity .3s;
+    /* ── TABS ── */
+    .tabs-wrap{position:relative;z-index:1;padding:0 6%;border-top:1px solid var(--b1);}
+    .tab-nav{
+      display:flex;align-items:center;gap:0;
+      border-bottom:1px solid var(--b1);
+      max-width:1100px;margin:0 auto;
+      overflow-x:auto;
     }
-    .audio-bars.show{opacity:1;}
-    .ab{width:8px;border-radius:3px 3px 0 0;background:var(--violet);min-height:4px;}
+    .tab-btn{
+      font-size:.82rem;font-weight:500;letter-spacing:.04em;
+      padding:1.1rem 1.75rem;cursor:pointer;background:transparent;
+      border:none;color:var(--muted);border-bottom:2px solid transparent;
+      transition:all .2s;white-space:nowrap;font-family:'Inter',sans-serif;
+      margin-bottom:-1px;
+    }
+    .tab-btn:hover{color:var(--text);}
+    .tab-btn.active{color:var(--v2);border-bottom-color:var(--v);}
+    .tab-panels{max-width:1100px;margin:0 auto;padding:3rem 0;}
+    .tab-panel{display:none;}
+    .tab-panel.active{display:block;animation:fadein .3s ease;}
+    @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-    /* midi result */
-    .midi-result{
-      margin-top:1.25rem;
-      opacity:0;transition:opacity .4s;
+    /* feature grid inside tabs */
+    .feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+    .feat-card{
+      background:var(--s1);border:1px solid var(--b1);border-radius:10px;
+      padding:1.75rem;transition:all .2s;cursor:default;
     }
-    .midi-result.show{opacity:1;}
-    .midi-track-display{
-      background:var(--bg);
-      border:1px solid var(--border2);
-      border-radius:8px;
-      padding:1rem;
-      font-family:'JetBrains Mono',monospace;
-      font-size:.78rem;
-      color:var(--teal);
-      min-height:48px;
-    }
-    .midi-notes-row{display:flex;gap:4px;align-items:center;}
-    .midi-note{
-      background:var(--violet);
-      color:#fff;font-size:.7rem;
-      padding:.2rem .5rem;border-radius:4px;
-      opacity:0;transform:translateY(8px);
-      transition:opacity .2s,transform .2s;
-    }
-    .midi-note.show{opacity:1;transform:none;}
+    .feat-card:hover{border-color:var(--v);background:var(--s2);transform:translateY(-2px);}
+    .feat-card-icon{font-size:1.4rem;margin-bottom:.75rem;}
+    .feat-card-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem;}
+    .feat-card-desc{font-size:.84rem;color:var(--muted);line-height:1.75;}
+    .feat-badge{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(62,207,176,.3);padding:.1rem .45rem;border-radius:3px;margin-left:.5rem;vertical-align:middle;}
 
-    /* theory box */
-    .theory-box{
-      opacity:0;transition:opacity .5s;
-    }
-    .theory-box.show{opacity:1;}
-    .theory-box-inner{
-      background:rgba(62,207,176,.06);
-      border:1px solid rgba(62,207,176,.25);
-      border-radius:10px;
-      padding:1.25rem 1.5rem;
-    }
-    .theory-box-inner .t-label{
-      font-family:'JetBrains Mono',monospace;
-      font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
-      color:var(--teal);margin-bottom:.5rem;
-    }
-    .theory-box-inner p{font-size:.87rem;color:var(--muted);line-height:1.75;}
-    .theory-box-inner strong{color:#fff;}
+    /* learn toggle */
+    .learn-toggle-row{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding:1.25rem 1.5rem;background:var(--s1);border:1px solid var(--b1);border-radius:10px;}
+    .toggle-switch{position:relative;width:44px;height:24px;flex-shrink:0;}
+    .toggle-switch input{opacity:0;width:0;height:0;}
+    .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--b2);border-radius:100px;transition:.3s;}
+    .toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+    .toggle-switch input:checked + .toggle-slider{background:var(--v);}
+    .toggle-switch input:checked + .toggle-slider::before{transform:translateX(20px);}
+    .toggle-label{font-size:.88rem;color:var(--muted);}
+    .toggle-label strong{color:var(--text);}
+    .learn-content{display:none;}
+    .learn-content.visible{display:block;animation:fadein .3s ease;}
 
-    /* ── EDUCATION CARDS ── */
-    .edu-grid{
-      display:grid;grid-template-columns:repeat(2,1fr);
-      gap:1px;background:var(--border);
-      border:1px solid var(--border);border-radius:10px;overflow:hidden;
+    /* ── RADAR CHART SECTION ── */
+    .chart-layout{display:grid;grid-template-columns:1fr 380px;gap:3rem;align-items:start;}
+    .radar-wrap{position:relative;}
+    #radar-canvas{display:block;width:100%;max-width:500px;}
+    .chart-legend{display:flex;flex-direction:column;gap:.75rem;}
+    .legend-item{
+      display:flex;align-items:center;gap:.85rem;
+      padding:1rem 1.25rem;border:1px solid var(--b1);border-radius:8px;
+      cursor:pointer;transition:all .2s;background:var(--s1);
     }
-    .edu-card{
-      background:var(--surface);padding:2rem;
-      transition:background .2s;
-    }
-    .edu-card:hover{background:var(--surface2);}
-    .edu-icon{font-size:1.5rem;margin-bottom:.75rem;}
-    .edu-card-title{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.45rem;}
-    .edu-card-desc{font-size:.84rem;color:var(--muted);line-height:1.75;}
-    .edu-example{
-      margin-top:.85rem;
-      padding:.6rem .9rem;
-      border-left:2px solid rgba(124,106,247,.4);
-      font-family:'JetBrains Mono',monospace;
-      font-size:.75rem;color:var(--muted);
-      line-height:1.65;
-      background:rgba(124,106,247,.04);
-      border-radius:0 6px 6px 0;
-    }
+    .legend-item:hover,.legend-item.active{border-color:var(--b2);background:var(--s2);}
+    .legend-item.dimmed{opacity:.35;}
+    .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0;}
+    .legend-name{font-size:.9rem;font-weight:600;color:#fff;flex:1;}
+    .legend-tag{font-size:.72rem;color:var(--muted);font-family:'JetBrains Mono',monospace;}
 
-    /* ── TECH ROWS ── */
-    .tech-row{
-      display:grid;grid-template-columns:240px 1fr;gap:2.5rem;
-      align-items:start;padding:1.75rem 0;
-      border-top:1px solid var(--border);
-    }
-    .tech-row:last-child{border-bottom:1px solid var(--border);}
-    .tech-name{font-size:.92rem;font-weight:600;color:#fff;}
-    .tech-badge{
-      display:inline-block;
-      font-family:'JetBrains Mono',monospace;
-      font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;
-      color:var(--teal);border:1px solid rgba(62,207,176,.3);
-      padding:.1rem .45rem;border-radius:3px;margin-left:.6rem;vertical-align:middle;
-    }
-    .tech-desc{font-size:.87rem;color:var(--muted);line-height:1.75;}
+    /* feature checklist table */
+    .feat-table{width:100%;border-collapse:collapse;margin-top:3rem;font-size:.85rem;}
+    .feat-table th{padding:.75rem 1rem;text-align:left;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--b1);font-weight:500;}
+    .feat-table th:not(:first-child){text-align:center;}
+    .feat-table td{padding:.85rem 1rem;border-bottom:1px solid rgba(30,32,80,.6);color:var(--muted);}
+    .feat-table td:first-child{color:var(--text);font-weight:500;}
+    .feat-table td:not(:first-child){text-align:center;}
+    .feat-table tr:hover td{background:rgba(124,106,247,.04);}
+    .check{color:var(--teal);font-size:1rem;}
+    .cross{color:var(--muted2);font-size:.9rem;}
+    .partial{color:var(--amber);font-size:.75rem;font-family:'JetBrains Mono',monospace;}
+    .ef-col{color:var(--v2)!important;}
 
-    /* ── OSS CARDS ── */
+    /* ── OSS ── */
     .oss-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
-    .oss-card{
-      background:var(--surface);border:1px solid var(--border);
-      border-radius:10px;padding:1.75rem;transition:all .2s;
-    }
-    .oss-card:hover{border-color:var(--violet);background:var(--surface2);transform:translateY(-3px);}
+    .oss-card{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:1.75rem;transition:all .2s;}
+    .oss-card:hover{border-color:var(--v);background:var(--s2);transform:translateY(-2px);}
     .oss-icon{font-size:1.4rem;margin-bottom:.75rem;}
     .oss-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem;}
     .oss-desc{font-size:.83rem;color:var(--muted);line-height:1.7;}
 
     /* ── MANIFESTO ── */
-    #manifesto{
-      position:relative;z-index:1;
-      padding:80px 6%;border-top:1px solid var(--border);
-    }
-    .manifesto-inner{max-width:720px;margin:0 auto;text-align:center;}
-    blockquote{
-      font-size:clamp(1.5rem,3.5vw,2.4rem);
-      font-weight:700;color:#fff;line-height:1.4;
-      margin-bottom:1.5rem;letter-spacing:-.02em;
-    }
-    blockquote em{
-      background:linear-gradient(135deg,var(--violet2),var(--teal));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-      font-style:italic;
-    }
-    .manifesto-body{font-size:.92rem;color:var(--muted);line-height:1.9;font-weight:300;}
+    #manifesto{position:relative;z-index:1;padding:80px 6%;border-top:1px solid var(--b1);}
+    .mani-inner{max-width:720px;margin:0 auto;text-align:center;}
+    blockquote{font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:800;color:#fff;line-height:1.4;margin-bottom:1.5rem;letter-spacing:-.02em;}
+    blockquote em{background:linear-gradient(135deg,var(--v2),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-style:italic;}
+    .mani-body{font-size:.92rem;color:var(--muted);line-height:1.9;font-weight:300;}
 
     /* ── CTA ── */
-    #cta{
-      position:relative;z-index:1;
-      padding:80px 6%;border-top:1px solid var(--border);
-      text-align:center;
-    }
-    .cta-glow{
-      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-      width:600px;height:300px;
-      background:radial-gradient(ellipse,rgba(124,106,247,.12) 0%,transparent 70%);
-      pointer-events:none;
-    }
-    .cta-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--violet);margin-bottom:.75rem;}
-    .cta-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:.75rem;line-height:1.1;}
+    #cta{position:relative;z-index:1;padding:80px 6%;border-top:1px solid var(--b1);text-align:center;}
+    .cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(124,106,247,.12) 0%,transparent 70%);pointer-events:none;}
+    .cta-ey{font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--v);margin-bottom:.75rem;}
+    .cta-tt{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;color:#fff;letter-spacing:-.03em;margin-bottom:.75rem;line-height:1.1;}
     .cta-sub{font-size:.92rem;color:var(--muted);margin-bottom:2.5rem;font-weight:300;}
     .cta-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
 
-    /* ── FOOTER ── */
-    footer{
-      position:relative;z-index:1;
-      border-top:1px solid var(--border);
-      padding:1.75rem 6%;
-      display:flex;justify-content:space-between;align-items:center;
-      font-size:.78rem;color:var(--muted2);
-    }
+    footer{position:relative;z-index:1;border-top:1px solid var(--b1);padding:1.75rem 6%;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted2);}
 
-    /* ── SCROLL REVEAL ── */
-    .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+    /* ── REVEAL ── */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
     .reveal.visible{opacity:1;transform:none;}
-    .reveal-left{opacity:0;transform:translateX(-20px);transition:opacity .6s ease,transform .6s ease;}
-    .reveal-left.visible{opacity:1;transform:none;}
 
-    @media(max-width:700px){
-      .demo-row{grid-template-columns:1fr;}
-      .edu-grid{grid-template-columns:1fr;}
+    @media(max-width:900px){
+      .pillars{grid-template-columns:1fr;}
+      .chart-layout{grid-template-columns:1fr;}
+      .feat-grid{grid-template-columns:1fr;}
       .oss-grid{grid-template-columns:1fr;}
-      .tech-row{grid-template-columns:1fr;gap:.5rem;}
-      .hook{grid-template-columns:40px 1fr;gap:1rem;}
+      .nav-links{display:none;}
+    }
+    @media(max-width:600px){
+      .feat-table th:nth-child(n+3),.feat-table td:nth-child(n+3){display:none;}
     }
   </style>
 </head>
 <body>
 
-<canvas id="stars-canvas"></canvas>
+<canvas id="stars"></canvas>
 
 <nav>
   <div class="nav-logo">// EchoForge</div>
-  <a class="nav-back" href="index.html">← shubhankar.dev</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#compare">Compare</a></li>
+      <li><a href="#oss">Open Source</a></li>
+    </ul>
+    <a class="nav-back" href="index.html">← portfolio</a>
+  </div>
 </nav>
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="codename-tag">Codename &nbsp;·&nbsp; In Development</div>
+  <div class="codename-chip"><span class="chip-dot"></span>Codename &nbsp;·&nbsp; In Development</div>
 
-  <!-- DAW Illustration -->
-  <div class="daw-art-wrap">
-    <svg class="daw-art" viewBox="0 0 960 510" xmlns="http://www.w3.org/2000/svg">
+  <div class="daw-wrap">
+    <svg viewBox="0 0 960 510" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="halo" cx="50%" cy="48%" r="50%">
-          <stop offset="0%"   stop-color="#4a35b0" stop-opacity="0.38"/>
+        <radialGradient id="hl" cx="50%" cy="48%" r="50%">
+          <stop offset="0%" stop-color="#4a35b0" stop-opacity=".38"/>
           <stop offset="100%" stop-color="#4a35b0" stop-opacity="0"/>
         </radialGradient>
-        <filter id="sf">
-          <feGaussianBlur stdDeviation="2.5" result="b"/>
-          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <clipPath id="screen-clip">
-          <rect x="256" y="52" width="448" height="280" rx="5"/>
-        </clipPath>
+        <clipPath id="sc"><rect x="256" y="52" width="448" height="280" rx="5"/></clipPath>
       </defs>
-
-      <!-- halo -->
-      <ellipse cx="480" cy="250" rx="410" ry="285" fill="url(#halo)"/>
-
-      <!-- LEFT PANEL -->
+      <ellipse cx="480" cy="250" rx="420" ry="285" fill="url(#hl)"/>
+      <!-- left panel -->
       <rect x="72" y="145" width="158" height="218" rx="9" fill="#0c1028" stroke="#1c2248" stroke-width="1.5"/>
       <rect x="72" y="145" width="158" height="26" rx="9" fill="#14183c"/>
       <rect x="72" y="159" width="158" height="12" fill="#14183c"/>
@@ -468,254 +282,305 @@
       <rect x="88" y="221" width="54" height="5" rx="2.5" fill="#22265a"/>
       <rect x="88" y="234" width="102" height="5" rx="2.5" fill="#22265a"/>
       <rect x="88" y="247" width="78" height="5" rx="2.5" fill="#22265a"/>
-      <rect x="88" y="260" width="64" height="5" rx="2.5" fill="#22265a"/>
-      <rect x="88" y="325" width="84" height="22" rx="5" fill="#7c6af7" opacity="0.85"/>
-
-      <!-- MAIN MONITOR FRAME -->
+      <rect x="88" y="325" width="84" height="22" rx="5" fill="#7c6af7" opacity=".85"/>
+      <!-- monitor -->
       <rect x="240" y="36" width="480" height="348" rx="14" fill="#0d1e22" stroke="#1d4040" stroke-width="2.5"/>
-      <!-- Screen area -->
       <rect x="256" y="52" width="448" height="280" rx="5" fill="#071414"/>
-
-      <!-- Track row BGs -->
       <rect x="256" y="52"  width="448" height="48" fill="#0c1c1c"/>
       <rect x="256" y="100" width="448" height="48" fill="#0a1818"/>
       <rect x="256" y="148" width="448" height="48" fill="#0c1c1a"/>
       <rect x="256" y="196" width="448" height="48" fill="#0a1612"/>
       <rect x="256" y="244" width="448" height="48" fill="#0b1810"/>
-
-      <!-- Row 1 — violet -->
       <rect x="274" y="62"  width="130" height="28" rx="4" fill="#7c6af7"/>
-      <!-- Row 2 — deeper violet -->
       <rect x="274" y="110" width="192" height="28" rx="4" fill="#5e4ede"/>
-      <!-- Row 3 — teal x4 -->
       <rect x="274" y="158" width="68"  height="28" rx="4" fill="#3ecfb0"/>
       <rect x="350" y="158" width="92"  height="28" rx="4" fill="#3ecfb0"/>
       <rect x="450" y="158" width="58"  height="28" rx="4" fill="#3ecfb0"/>
       <rect x="516" y="158" width="44"  height="28" rx="4" fill="#3ecfb0"/>
-      <!-- Row 4 — orange x2 -->
       <rect x="274" y="206" width="152" height="28" rx="4" fill="#e06040"/>
       <rect x="434" y="206" width="112" height="28" rx="4" fill="#c04828"/>
-      <!-- Row 5 — amber x2 -->
       <rect x="274" y="254" width="188" height="28" rx="4" fill="#e89830"/>
       <rect x="470" y="254" width="88"  height="28" rx="4" fill="#c87820"/>
-
-      <!-- Waveform strip -->
       <rect x="256" y="292" width="448" height="40" fill="#060e0e"/>
-      <polyline id="waveform-line" fill="none" stroke="#3ecfb0" stroke-width="1.5" opacity=".7"
+      <polyline id="wv" fill="none" stroke="#3ecfb0" stroke-width="1.5" opacity=".7"
         points="256,312 270,302 284,322 298,296 312,328 326,300 340,314 354,294 368,326 382,298 396,312 410,296 424,322 438,300 452,312 466,296 480,324 494,300 508,312 522,296 536,320 550,302 564,312 578,295 592,320 606,302 620,312 634,296 648,324 662,300 676,314 690,298 704,312"/>
-
-      <!-- Playhead -->
-      <g id="ph-group" style="animation: ph-move 7s linear infinite">
-        <line id="ph-line" x1="430" y1="52" x2="430" y2="332" stroke="rgba(255,255,255,0.6)" stroke-width="1.5"/>
-        <polygon id="ph-arrow" points="426,52 434,52 430,60" fill="rgba(255,255,255,0.75)"/>
+      <g id="ph-g">
+        <line x1="430" y1="52" x2="430" y2="332" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+        <polygon points="426,52 434,52 430,60" fill="rgba(255,255,255,.75)"/>
       </g>
-
-      <!-- Transport -->
       <rect x="256" y="332" width="448" height="46" fill="#050c0c"/>
       <circle cx="480" cy="355" r="13" fill="#112828" stroke="#1e4040" stroke-width="1.5"/>
       <polygon points="476,349 476,361 489,355" fill="#3ecfb0"/>
       <rect x="500" y="347" width="84" height="16" rx="3" fill="#0a1c1c"/>
-      <text x="506" y="359" font-size="9" fill="#3ecfb0" font-family="monospace" letter-spacing="0.5">00:01:42.0</text>
+      <text x="506" y="359" font-size="9" fill="#3ecfb0" font-family="monospace" letter-spacing=".5">00:01:42.0</text>
       <text x="598" y="359" font-size="9" fill="#3a7070" font-family="monospace">128 BPM</text>
-
-      <!-- RIGHT PANEL — mixer -->
+      <!-- right panel -->
       <rect x="730" y="145" width="158" height="218" rx="9" fill="#0c1028" stroke="#1c2248" stroke-width="1.5"/>
       <rect x="730" y="145" width="158" height="26" rx="9" fill="#14183c"/>
       <rect x="730" y="159" width="158" height="12" fill="#14183c"/>
-      <!-- bar tracks (background) -->
       <rect x="746" y="260" width="20" height="88" rx="3" fill="#181c3a"/>
       <rect x="773" y="260" width="20" height="88" rx="3" fill="#181c3a"/>
       <rect x="800" y="260" width="20" height="88" rx="3" fill="#181c3a"/>
       <rect x="827" y="260" width="20" height="88" rx="3" fill="#181c3a"/>
       <rect x="854" y="260" width="20" height="88" rx="3" fill="#181c3a"/>
-      <!-- animated bar fills — anchored at bottom y=348 -->
       <rect id="mb1" class="mb" x="746" y="222" width="20" height="126" rx="3" fill="#7c6af7" opacity=".9"/>
       <rect id="mb2" class="mb" x="773" y="204" width="20" height="144" rx="3" fill="#3ecfb0" opacity=".9"/>
       <rect id="mb3" class="mb" x="800" y="238" width="20" height="110" rx="3" fill="#e06040" opacity=".9"/>
       <rect id="mb4" class="mb" x="827" y="215" width="20" height="133" rx="3" fill="#e89830" opacity=".9"/>
       <rect id="mb5" class="mb" x="854" y="248" width="20" height="100" rx="3" fill="#e060a8" opacity=".9"/>
-
-      <!-- Monitor neck + desk -->
       <rect x="452" y="384" width="56" height="30" rx="4" fill="#0b1620" stroke="#162030" stroke-width="1"/>
       <rect x="150" y="412" width="660" height="16" rx="4" fill="#0b1824" stroke="#162030" stroke-width="1"/>
-
-      <!-- Status lights -->
       <circle cx="469" cy="399" r="4.5" fill="#3ecfb0"/>
       <circle cx="480" cy="399" r="4.5" fill="#e89830"/>
       <circle cx="491" cy="399" r="4.5" fill="#e06040"/>
     </svg>
   </div>
 
-  <h1 class="hero-title"><span class="glow">EchoForge</span></h1>
-  <p class="hero-version">v0.1-alpha &nbsp;·&nbsp; early 2027</p>
-  <p class="hero-tagline">open source <span>·</span> built by one person <span>·</span> for every producer on earth</p>
-
+  <h1 class="hero-title"><span class="g">EchoForge</span></h1>
+  <p class="hero-ver">v0.1-alpha &nbsp;·&nbsp; early 2027</p>
+  <p class="hero-tag2">open source <span>·</span> built by one person <span>·</span> for every producer on earth</p>
   <div class="hero-pills">
     <span class="pill lit">100% Offline</span>
     <span class="pill lit">Free Forever</span>
     <span class="pill lit">Open Source</span>
-    <span class="pill">No Cloud</span>
+    <span class="pill">AI-Native</span>
     <span class="pill">No Subscription</span>
-    <span class="pill">No Trap</span>
+    <span class="pill">No Cloud</span>
   </div>
   <div class="hero-btns">
-    <a class="btn btn-violet" href="mailto:shubhankar.kam@gmail.com?subject=EchoForge early access">Request early access</a>
+    <a class="btn btn-v" href="mailto:shubhankar.kam@gmail.com?subject=EchoForge early access">Request early access</a>
     <a class="btn btn-ghost" href="https://github.com/So-bonkers" target="_blank">Follow on GitHub</a>
   </div>
+  <p class="scroll-hint">↓ scroll</p>
+</section>
 
-  <div class="scroll-cue">
-    scroll
-    <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><rect x="5.5" y="1" width="3" height="5" rx="1.5" fill="currentColor"/><path d="M7 10 L7 18 M4 15 L7 18 L10 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+<!-- ── THREE PILLARS ── -->
+<section class="sec wide" id="features">
+  <p class="s-ey reveal">Why it exists</p>
+  <h2 class="s-tt reveal">One tool. Three promises.</h2>
+  <div class="pillars reveal">
+    <div class="pillar">
+      <div class="pillar-icon">🧠</div>
+      <p class="pillar-title">AI-Native from the ground up</p>
+      <p class="pillar-desc">Not AI bolted on as an afterthought. Hum-to-MIDI, stem separation, adaptive quantisation, pattern generation — the whole workflow is AI-accelerated, running entirely on your hardware.</p>
+      <p class="pillar-stat">// no API keys. no internet. no latency.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">🔒</div>
+      <p class="pillar-title">Your sessions, forever yours</p>
+      <p class="pillar-desc">100% offline. Open <code>.echoforge</code> format. No subscription that can expire, no cloud that can go down, no company that can be acquired and shut your project files out.</p>
+      <p class="pillar-stat">// read every session file in a text editor.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-icon">∞</div>
+      <p class="pillar-title">Free. Forever. No trap.</p>
+      <p class="pillar-desc">No freemium tier that locks stems export. No annual subscription. No feature flags for paying users. The full tool, for every producer on earth, regardless of where they live or what they can afford.</p>
+      <p class="pillar-stat">// $0 now. $0 always.</p>
+    </div>
   </div>
 </section>
 
-<!-- ── HOOKS ── -->
-<div id="hooks-section">
-  <div class="hook reveal">
-    <div class="hook-num">01</div>
-    <div>
-      <p class="hook-text">Hum a melody into your mic — watch it become <span class="hl">MIDI instantly</span>. No instrument needed.</p>
-      <p class="hook-sub">No keyboard, no theory, no barrier. If you can hear it in your head, EchoForge can catch it.</p>
-    </div>
+<!-- ── FEATURE TABS ── -->
+<div class="tabs-wrap" id="tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="producer">For Producers</button>
+    <button class="tab-btn" data-tab="ai">AI Features</button>
+    <button class="tab-btn" data-tab="workflow">Workflow</button>
+    <button class="tab-btn" data-tab="learn">Learning Mode</button>
   </div>
-  <div class="hook reveal">
-    <div class="hook-num">02</div>
-    <div>
-      <p class="hook-text">Every musical decision explained in <span class="hl">plain English</span>, in real time.</p>
-      <p class="hook-sub">Not after the fact, not in a manual. Right there, as your fingers move.</p>
-    </div>
-  </div>
-  <div class="hook reveal">
-    <div class="hook-num">03</div>
-    <div>
-      <p class="hook-text">"You just used a <span class="hl">Dorian mode</span> — here's how Miles Davis used it in <em>So What</em>, and how it appears in <span class="hl-teal">Ethiopian tizita</span> music."</p>
-      <p class="hook-sub">Music theory connected to real recordings across 80+ cultures. You hear the rule and the exception in the same breath.</p>
-    </div>
-  </div>
-  <div class="hook reveal">
-    <div class="hook-num">04</div>
-    <div>
-      <p class="hook-text"><span class="hl-teal">100% offline. 100% local.</span> Your music never touches a server.</p>
-      <p class="hook-sub">Everything runs on your machine. No upload, no sync, no account. Your sessions are yours, period.</p>
-    </div>
-  </div>
-  <div class="hook reveal">
-    <div class="hook-num">05</div>
-    <div>
-      <p class="hook-text"><span class="hl-amber">Free. Forever.</span> No subscription. No cloud. No trap.</p>
-      <p class="hook-sub">The music production industry made tools expensive by design. EchoForge doesn't do that.</p>
-    </div>
-  </div>
-</div>
+  <div class="tab-panels">
 
-<!-- ── DEMO ── -->
-<section id="demo">
-  <div class="demo-wrap">
-    <p class="s-eyebrow reveal">Interactive Preview</p>
-    <h2 class="s-title reveal">See it in action</h2>
-    <p class="s-intro reveal">Click the mic, "hum" a melody, and watch EchoForge detect pitch, build MIDI, and explain the theory — all in one motion.</p>
-    <div class="demo-stage reveal">
-      <p class="demo-label">// hum-to-midi demo</p>
-      <div class="demo-row">
-        <div class="demo-left">
-          <h3 class="demo-title">Hum → MIDI → Theory</h3>
-          <p class="demo-desc">No instrument. No music knowledge required. Just your voice and an idea.</p>
-          <button class="mic-btn" id="mic-btn">
-            <span class="mic-icon">🎤</span>
-            <span id="mic-label">Start humming</span>
-          </button>
-          <div class="audio-bars" id="audio-bars">
-            <!-- generated by JS -->
-          </div>
-          <div class="midi-result" id="midi-result">
-            <div class="midi-track-display">
-              <div class="midi-notes-row" id="midi-notes-row"></div>
-            </div>
-          </div>
+    <!-- PRODUCERS -->
+    <div class="tab-panel active" id="tab-producer">
+      <div class="feat-grid">
+        <div class="feat-card reveal">
+          <div class="feat-card-icon">🥁</div>
+          <p class="feat-card-title">AI Stem Separation <span class="feat-badge">local</span></p>
+          <p class="feat-card-desc">Drop any track — commercial release, sample, or reference mix — and pull out drums, bass, melody, and vocals as individual stems. Everything runs on your CPU/GPU. Nothing leaves your machine.</p>
         </div>
-        <div class="demo-left">
-          <div class="theory-box" id="theory-box">
-            <div class="theory-box-inner">
-              <p class="t-label">EchoForge Analysis</p>
-              <p>You hummed a <strong>D minor pentatonic</strong> phrase. The notes D–F–G–A–C give it that <strong>melancholic, open quality</strong>.</p>
-              <br>
-              <p>This scale appears in <strong>West African kora music</strong>, <strong>Mississippi Delta blues</strong>, and virtually every genre of modern pop. It's one of the most universal musical patterns on earth.</p>
-              <br>
-              <p>Suggested next chord: <strong>Fm → C → Dm</strong> &mdash; a ii–VII–i progression that deepens the mood without resolving it.</p>
-            </div>
-          </div>
+        <div class="feat-card reveal">
+          <div class="feat-card-icon">🎹</div>
+          <p class="feat-card-title">Hum to MIDI</p>
+          <p class="feat-card-desc">Sing, hum, or whistle a melody into your mic. EchoForge converts it to quantised MIDI in real time. No instrument, no keyboard, no theory needed — just the idea in your head.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-card-icon">🎛️</div>
+          <p class="feat-card-title">MIDI Editor + AI Quantisation</p>
+          <p class="feat-card-desc">Full piano roll with AI-assisted groove quantisation that preserves your feel while fixing the timing. Pattern variation engine generates fills and variations from your existing clips.</p>
+        </div>
+        <div class="feat-card reveal">
+          <div class="feat-card-icon">💾</div>
+          <p class="feat-card-title">Open .echoforge Format</p>
+          <p class="feat-card-desc">Your sessions are plain-text readable. Every plugin state, every automation curve, every sample reference — documented and open. Version control your music in git if you want to.</p>
         </div>
       </div>
     </div>
+
+    <!-- AI -->
+    <div class="tab-panel" id="tab-ai">
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-card-icon">⚡</div>
+          <p class="feat-card-title">Hardware-Aware Inference</p>
+          <p class="feat-card-desc">Automatically benchmarks your machine on first run and selects the right model tier. Runs lean on a 2018 laptop. Runs fast on a GPU workstation. No manual config.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">🔀</div>
+          <p class="feat-card-title">Pattern Generation</p>
+          <p class="feat-card-desc">Highlight a MIDI region and ask for variations — tighter groove, sparser arrangement, genre-shifted. The model runs locally and doesn't touch your stem audio.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">🎙️</div>
+          <p class="feat-card-title">Real-Time Pitch Detection</p>
+          <p class="feat-card-desc">Sub-100ms pitch tracking from any audio input. Sing into the arrangement view and watch notes appear as you go. Works polyphonically on simple chord voicings.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">🧩</div>
+          <p class="feat-card-title">Context-Aware Suggestions</p>
+          <p class="feat-card-desc">EchoForge reads your current key, scale, and rhythmic grid and suggests MIDI continuations that fit. Toggle off in settings if you just want to be left alone.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKFLOW -->
+    <div class="tab-panel" id="tab-workflow">
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-card-icon">🗂️</div>
+          <p class="feat-card-title">Arrangement View</p>
+          <p class="feat-card-desc">Timeline-based arrangement editor with clip launching, scene switching, and per-clip automation. Familiar to anyone who's used a DAW before.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">🔌</div>
+          <p class="feat-card-title">VST3 / AU Plugin Support</p>
+          <p class="feat-card-desc">Load your existing instrument and effect plugins. EchoForge doesn't lock you into a proprietary sound engine. Keep the plugins you've already bought.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">🌊</div>
+          <p class="feat-card-title">Mixer with Routing</p>
+          <p class="feat-card-desc">Full channel strip: gain, EQ, dynamics, send/return routing. Nothing exotic — just a clean, fast mixer that gets out of your way.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-card-icon">⌨️</div>
+          <p class="feat-card-title">Keyboard-First Design</p>
+          <p class="feat-card-desc">Every action has a keyboard shortcut. The mouse is optional. Designed to keep experienced producers in flow without reaching for a menu.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEARNING MODE -->
+    <div class="tab-panel" id="tab-learn">
+      <div class="learn-toggle-row">
+        <label class="toggle-switch">
+          <input type="checkbox" id="learn-toggle"/>
+          <span class="toggle-slider"></span>
+        </label>
+        <p class="toggle-label"><strong>Learning Mode</strong> &mdash; an optional overlay for producers who want to understand what they're doing. Toggle it on when you're curious, off when you're in flow.</p>
+      </div>
+      <div class="learn-content" id="learn-content">
+        <div class="feat-grid">
+          <div class="feat-card">
+            <div class="feat-card-icon">📖</div>
+            <p class="feat-card-title">Scale & Chord Naming</p>
+            <p class="feat-card-desc">Detects your key, names every chord you play, and shows the scale degree in real time. The information panel floats over the piano roll — dismiss it with Escape.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-card-icon">🌍</div>
+            <p class="feat-card-title">10,000+ Cultural Examples</p>
+            <p class="feat-card-desc">"You're using a Dorian mode — Miles Davis used it in <em>So What</em>, and it runs through Ethiopian tizita music." Connects your choices to 80+ musical traditions.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-card-icon">🎚️</div>
+            <p class="feat-card-title">Genre Lens</p>
+            <p class="feat-card-desc">Select a genre — trap, lo-fi, afrobeats, jazz, classical — and see an overlay explaining what producers in that tradition actually do differently in their arrangements.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-card-icon">💡</div>
+            <p class="feat-card-title">Chord Suggestions + Reasoning</p>
+            <p class="feat-card-desc">Chord suggestions shown with the theory reasoning visible, not hidden. "Try Fm → C → Dm — a ii–VII–i that deepens the mood." Accept, reject, or ignore.</p>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);margin-top:1.5rem;font-style:italic;">Learning Mode is off by default. It doesn't change how the DAW works — it just adds a context layer when you want it.</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── COMPARISON ── -->
+<section class="sec wide" id="compare">
+  <p class="s-ey reveal">How it stacks up</p>
+  <h2 class="s-tt reveal">EchoForge vs the rest</h2>
+  <p class="s-sub reveal">Click a tool in the legend to highlight it. The axes are scored 0–10 (higher = better for the producer).</p>
+  <div class="chart-layout reveal">
+    <div class="radar-wrap">
+      <canvas id="radar-canvas" width="500" height="500"></canvas>
+    </div>
+    <div>
+      <div class="chart-legend" id="chart-legend">
+        <div class="legend-item active" data-tool="0">
+          <div class="legend-dot" style="background:#a898ff"></div>
+          <span class="legend-name">EchoForge</span>
+          <span class="legend-tag">Codename</span>
+        </div>
+        <div class="legend-item" data-tool="1">
+          <div class="legend-dot" style="background:#f07050"></div>
+          <span class="legend-name">FL Studio</span>
+          <span class="legend-tag">Image-Line</span>
+        </div>
+        <div class="legend-item" data-tool="2">
+          <div class="legend-dot" style="background:#4a8ef0"></div>
+          <span class="legend-name">Logic Pro</span>
+          <span class="legend-tag">Apple</span>
+        </div>
+        <div class="legend-item" data-tool="3">
+          <div class="legend-dot" style="background:#3ecfb0"></div>
+          <span class="legend-name">BandLab</span>
+          <span class="legend-tag">Online</span>
+        </div>
+      </div>
+      <p style="font-size:.74rem;color:var(--muted2);margin-top:1.25rem;font-family:'JetBrains Mono',monospace;line-height:1.7;">
+        Axes: AI Integration · Offline/Privacy · Cost Access · Open Source · Stem Sep · Ease of Use · Pro Depth · Innovation
+      </p>
+    </div>
+  </div>
+
+  <!-- FEATURE TABLE -->
+  <div class="reveal" style="overflow-x:auto;margin-top:.5rem;">
+    <table class="feat-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th style="color:var(--v2)">EchoForge</th>
+          <th>FL Studio</th>
+          <th>Logic Pro</th>
+          <th>BandLab</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Completely free</td><td class="ef-col"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="partial">limited</span></td></tr>
+        <tr><td>100% offline</td><td class="ef-col"><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Open source</td><td class="ef-col"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>AI stem separation</td><td class="ef-col"><span class="check">✓</span></td><td><span class="partial">3rd party</span></td><td><span class="partial">limited</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Hum to MIDI</td><td class="ef-col"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Open session format</td><td class="ef-col"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Hardware-adaptive AI</td><td class="ef-col"><span class="check">✓</span></td><td><span class="cross">✗</span></td><td><span class="partial">partial</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Windows + Mac + Linux</td><td class="ef-col"><span class="check">✓</span></td><td><span class="partial">Win+Mac</span></td><td><span class="partial">Mac only</span></td><td><span class="partial">Web only</span></td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ── EDUCATION ── -->
-<div class="section full-bleed">
-  <p class="s-eyebrow reveal">The Education Angle</p>
-  <h2 class="s-title reveal">Your real differentiator</h2>
-  <p class="s-intro reveal">Other DAWs show you what you did. EchoForge shows you what it means, where it came from, and what else you can do with it.</p>
-  <div class="edu-grid">
-    <div class="edu-card reveal">
-      <div class="edu-icon">🎵</div>
-      <p class="edu-card-title">Scale & Note Detection</p>
-      <p class="edu-card-desc">Detects your scale, names your notes, and tells you exactly why your chord progression sounds the way it does.</p>
-      <p class="edu-example">"That's a flat VII chord — it gives the resolution that sense of landing without fully closing."</p>
-    </div>
-    <div class="edu-card reveal">
-      <div class="edu-icon">🌍</div>
-      <p class="edu-card-title">World Music Context</p>
-      <p class="edu-card-desc">10,000+ real examples across 80+ cultures. Every creative decision mapped to its global musical ancestry.</p>
-      <p class="edu-example">"This pentatonic pattern appears in West African kora music, Appalachian folk, and modern K-pop."</p>
-    </div>
-    <div class="edu-card reveal">
-      <div class="edu-icon">🎛️</div>
-      <p class="edu-card-title">Genre Mode</p>
-      <p class="edu-card-desc">Tells you what trap, lo-fi, afrobeats, and jazz producers actually do differently — arrangement, timing, texture, harmony.</p>
-      <p class="edu-example">"Trap sidesteps clean harmony almost entirely. The 808 IS the bass line AND the melody."</p>
-    </div>
-    <div class="edu-card reveal">
-      <div class="edu-icon">🔗</div>
-      <p class="edu-card-title">Chord Suggestions with Reasoning</p>
-      <p class="edu-card-desc">Suggests next chords and shows the music theory behind each one — front and centre, not hidden in a tooltip.</p>
-      <p class="edu-example">"Try a ii–V–I here. It creates tension then resolution — the most common move in jazz for 80 years."</p>
-    </div>
-  </div>
-</div>
-
-<!-- ── TECHNICAL ── -->
-<div class="section full-bleed">
-  <p class="s-eyebrow reveal">Technical Credibility</p>
-  <h2 class="s-title reveal">For the producer who needs convincing</h2>
-  <p class="s-intro reveal">Under the hood it's a serious piece of software.</p>
-  <div class="tech-row reveal">
-    <p class="tech-name">AI Stem Separation <span class="tech-badge">Local</span></p>
-    <p class="tech-desc">Drop any song. Pull out drums, bass, and vocals as separate stems — all processed on your machine, no upload required.</p>
-  </div>
-  <div class="tech-row reveal">
-    <p class="tech-name">MIDI Editor + AI Quantisation</p>
-    <p class="tech-desc">Full MIDI editing with AI-assisted quantisation and pattern variations. Keeps your groove, fixes the timing.</p>
-  </div>
-  <div class="tech-row reveal">
-    <p class="tech-name">Hardware-Aware Inference <span class="tech-badge">Adaptive</span></p>
-    <p class="tech-desc">Automatically selects the right model size for your machine. Runs fast on modest hardware; runs better when you have it.</p>
-  </div>
-  <div class="tech-row reveal">
-    <p class="tech-name">Open .echoforge Format</p>
-    <p class="tech-desc">Your sessions are stored in an open, documented format. Read them, move them, convert them — no lock-in, ever.</p>
-  </div>
-</div>
-
 <!-- ── OSS ── -->
-<div class="section full-bleed">
-  <p class="s-eyebrow reveal">Open Source</p>
-  <h2 class="s-title reveal">Built in the open</h2>
-  <p class="s-intro reveal">This builds trust fast — because you can verify it yourself.</p>
+<section class="sec wide" id="oss">
+  <p class="s-ey reveal">Open Source</p>
+  <h2 class="s-tt reveal">Built in the open</h2>
+  <p class="s-sub reveal">Trust through transparency — read every line, contribute, or fork it.</p>
   <div class="oss-grid">
     <div class="oss-card reveal">
       <div class="oss-icon">👤</div>
       <p class="oss-title">Built by one person</p>
-      <p class="oss-desc">For every producer on earth. No product managers deciding what features generate revenue. Just the tool producers actually need.</p>
+      <p class="oss-desc">No product managers deciding what generates revenue. No growth team. No pivot to enterprise. Just the tool producers actually need.</p>
     </div>
     <div class="oss-card reveal">
       <div class="oss-icon">📖</div>
@@ -724,22 +589,21 @@
     </div>
     <div class="oss-card reveal">
       <div class="oss-icon">🚫</div>
-      <p class="oss-title">No investor. No VC roadmap.</p>
-      <p class="oss-desc">No one is telling this project to monetise users. No growth metrics. No pivot to enterprise. Just the tool, getting better.</p>
+      <p class="oss-title">No investor. No roadmap driven by profit.</p>
+      <p class="oss-desc">No one is telling this project to monetise users. No growth metrics, no churn rate, no conversion funnel. Just the tool, getting better.</p>
     </div>
   </div>
-</div>
+</section>
 
 <!-- ── MANIFESTO ── -->
 <section id="manifesto">
-  <div class="manifesto-inner">
-    <blockquote class="reveal">"Music theory was never supposed to be <em>gatekeeping</em>."</blockquote>
-    <p class="manifesto-body reveal">
-      Every producer who learned to make music without formal training had to reverse-engineer
-      the theory from the records they loved. That's beautiful — but it's also slow, lonely, and
-      full of false starts. EchoForge is the tool that should have existed already: one that sits
-      next to you and explains what your instincts are doing, in the language of the music
-      you actually listen to.
+  <div class="mani-inner">
+    <blockquote class="reveal">"The best tools disappear.<br>They just let you <em>make</em>."</blockquote>
+    <p class="mani-body reveal">
+      EchoForge isn't trying to teach you music theory. It's trying to get out of your way.
+      The learning layer is there when you want it, invisible when you don't.
+      What it's really trying to do is remove every barrier between the idea in your head
+      and the track in your DAW — whether that barrier is cost, knowledge, hardware, or a subscription paywall.
     </p>
   </div>
 </section>
@@ -747,12 +611,12 @@
 <!-- ── CTA ── -->
 <section id="cta">
   <div class="cta-glow"></div>
-  <p class="cta-eyebrow reveal">Early Access</p>
-  <h2 class="cta-title reveal">Want to try it first?</h2>
-  <p class="cta-sub reveal">Drop me a message and I'll reach out when the first build is ready.</p>
+  <p class="cta-ey reveal">Early Access</p>
+  <h2 class="cta-tt reveal">Be first.</h2>
+  <p class="cta-sub reveal">Drop a message and I'll reach out when the first build is ready.</p>
   <div class="cta-btns reveal">
-    <a class="btn btn-violet" href="mailto:shubhankar.kam@gmail.com?subject=EchoForge early access">Get early access</a>
-    <a class="btn btn-ghost" href="https://github.com/So-bonkers" target="_blank">Watch the repo</a>
+    <a class="btn btn-v" href="mailto:shubhankar.kam@gmail.com?subject=EchoForge early access">Get early access</a>
+    <a class="btn btn-ghost" href="https://github.com/So-bonkers" target="_blank">Watch on GitHub</a>
   </div>
 </section>
 
@@ -764,130 +628,173 @@
 <script>
 /* ── STARFIELD ── */
 (function(){
-  const c = document.getElementById('stars-canvas');
-  const ctx = c.getContext('2d');
-  let W, H, stars = [], mx=0, my=0;
-
-  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
-
-  function mkStars(){
-    stars=[];
-    for(let i=0;i<200;i++){
-      stars.push({
-        x: Math.random()*W, y: Math.random()*H,
-        r: Math.random()*1.4+.3,
-        a: Math.random()*.7+.2,
-        speed: Math.random()*.3+.05,
-        ox: Math.random()*W, oy: Math.random()*H,
-      });
-    }
-  }
-
-  window.addEventListener('mousemove', e=>{ mx=e.clientX/W-.5; my=e.clientY/H-.5; });
-
+  const c=document.getElementById('stars'),ctx=c.getContext('2d');
+  let W,H,stars=[],mx=0,my=0;
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
+  function make(){stars=[];for(let i=0;i<200;i++)stars.push({ox:Math.random()*W,oy:Math.random()*H,r:Math.random()*1.4+.3,a:Math.random()*.7+.2,d:Math.random()*18+6});}
+  window.addEventListener('mousemove',e=>{mx=e.clientX/W-.5;my=e.clientY/H-.5;});
   function draw(){
     ctx.clearRect(0,0,W,H);
     stars.forEach(s=>{
-      // subtle parallax
-      const px = s.ox + mx*s.r*18;
-      const py = s.oy + my*s.r*14;
-      ctx.beginPath();
-      ctx.arc(px,py,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(200,195,255,${s.a})`;
-      ctx.fill();
+      ctx.beginPath();ctx.arc(s.ox+mx*s.d,s.oy+my*s.d*.7,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,195,255,${s.a})`;ctx.fill();
     });
     requestAnimationFrame(draw);
   }
-
-  resize(); mkStars(); draw();
-  window.addEventListener('resize', ()=>{ resize(); mkStars(); });
+  resize();make();draw();
+  window.addEventListener('resize',()=>{resize();make();});
 })();
 
 /* ── SCROLL REVEAL ── */
 (function(){
-  const obs = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('visible');
-        obs.unobserve(e.target);
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+})();
+
+/* ── TABS ── */
+(function(){
+  document.querySelectorAll('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-'+btn.dataset.tab).classList.add('active');
+    });
+  });
+})();
+
+/* ── LEARNING TOGGLE ── */
+(function(){
+  const toggle=document.getElementById('learn-toggle');
+  const content=document.getElementById('learn-content');
+  toggle.addEventListener('change',()=>{
+    content.classList.toggle('visible',toggle.checked);
+  });
+})();
+
+/* ── RADAR CHART ── */
+(function(){
+  const canvas=document.getElementById('radar-canvas');
+  const ctx=canvas.getContext('2d');
+  const SIZE=500,CX=250,CY=250,MAXR=185;
+
+  const AXES=['AI Integration','Offline / Privacy','Cost Access','Open Source','Stem Sep.','Ease of Use','Pro Depth','Innovation'];
+  const N=AXES.length;
+
+  const TOOLS=[
+    {name:'EchoForge', color:'#a898ff', values:[9,10,10,10,9,8,7,10], visible:true},
+    {name:'FL Studio',  color:'#f07050', values:[5, 6, 3, 0, 4, 6, 9, 5],  visible:true},
+    {name:'Logic Pro',  color:'#4a8ef0', values:[6, 7, 1, 0, 6, 7,10, 5],  visible:true},
+    {name:'BandLab',    color:'#3ecfb0', values:[4, 2, 8, 0, 3, 8, 4, 3],  visible:true},
+  ];
+
+  let highlighted = -1; // -1 = all visible
+
+  function angle(i){return (i/N)*Math.PI*2-Math.PI/2;}
+  function pt(i,v){const a=angle(i),r=(v/10)*MAXR;return[CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+
+  function draw(){
+    ctx.clearRect(0,0,SIZE,SIZE);
+
+    // grid rings
+    for(let r=2;r<=10;r+=2){
+      ctx.beginPath();
+      for(let i=0;i<N;i++){
+        const [x,y]=pt(i,r);
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle='rgba(255,255,255,0.06)';
+      ctx.lineWidth=1;ctx.stroke();
+    }
+
+    // axis lines + labels
+    for(let i=0;i<N;i++){
+      const [x,y]=pt(i,10);
+      ctx.beginPath();ctx.moveTo(CX,CY);ctx.lineTo(x,y);
+      ctx.strokeStyle='rgba(255,255,255,0.1)';ctx.lineWidth=1;ctx.stroke();
+
+      const [lx,ly]=pt(i,11.8);
+      ctx.save();
+      ctx.font='500 11px Inter,sans-serif';
+      ctx.fillStyle='rgba(168,152,255,0.75)';
+      ctx.textAlign= lx<CX-10?'right': lx>CX+10?'left':'center';
+      ctx.textBaseline= ly<CY-10?'bottom': ly>CY+10?'top':'middle';
+      ctx.fillText(AXES[i],lx,ly);
+      ctx.restore();
+    }
+
+    // tool polygons (back to front: dimmed first)
+    TOOLS.forEach((t,ti)=>{
+      if(!t.visible) return;
+      const dimmed = highlighted!==-1 && highlighted!==ti;
+      ctx.beginPath();
+      t.values.forEach((v,i)=>{
+        const [x,y]=pt(i,v);
+        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+      });
+      ctx.closePath();
+      const alpha = dimmed ? 0.06 : 0.15;
+      ctx.fillStyle = t.color+Math.round(alpha*255).toString(16).padStart(2,'0');
+      ctx.fill();
+      ctx.strokeStyle = dimmed ? t.color+'30' : t.color;
+      ctx.lineWidth = highlighted===ti ? 2.5 : 1.5;
+      ctx.stroke();
+
+      // dots on axes for highlighted tool
+      if(highlighted===ti){
+        t.values.forEach((v,i)=>{
+          const[x,y]=pt(i,v);
+          ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);
+          ctx.fillStyle=t.color;ctx.fill();
+        });
       }
     });
-  },{threshold:0.12});
-  document.querySelectorAll('.reveal,.reveal-left').forEach(el=>obs.observe(el));
-})();
-
-/* ── AUDIO BARS (random heights) ── */
-(function(){
-  const bars = document.getElementById('audio-bars');
-  for(let i=0;i<28;i++){
-    const b = document.createElement('div');
-    b.className='ab';
-    b.style.height = (Math.random()*48+4)+'px';
-    b.style.animationDelay = (i*.04)+'s';
-    bars.appendChild(b);
-  }
-})();
-
-/* ── DEMO INTERACTION ── */
-(function(){
-  const btn   = document.getElementById('mic-btn');
-  const label = document.getElementById('mic-label');
-  const abars = document.getElementById('audio-bars');
-  const mres  = document.getElementById('midi-result');
-  const tbox  = document.getElementById('theory-box');
-  const nrow  = document.getElementById('midi-notes-row');
-
-  const notes = ['D3','F3','G3','A3','C4','A3','G3','F3','D4'];
-  let running = false, ival;
-
-  function animBars(){
-    abars.querySelectorAll('.ab').forEach(b=>{
-      b.style.height=(Math.random()*52+6)+'px';
-    });
   }
 
-  btn.addEventListener('click',()=>{
-    if(running) return;
-    running=true;
-    btn.classList.add('active');
-    label.textContent='Listening…';
-    abars.classList.add('show');
-    ival = setInterval(animBars,100);
+  draw();
 
-    setTimeout(()=>{
-      clearInterval(ival);
-      abars.classList.remove('show');
-      btn.classList.remove('active');
-      label.textContent='Detected!';
-      btn.style.borderColor='var(--teal)';
-      btn.style.color='var(--teal)';
-
-      // show MIDI notes one by one
-      nrow.innerHTML='';
-      mres.classList.add('show');
-      notes.forEach((n,i)=>{
-        const el=document.createElement('div');
-        el.className='midi-note';
-        el.textContent=n;
-        nrow.appendChild(el);
-        setTimeout(()=>el.classList.add('show'),(i+1)*120);
+  // legend interaction
+  document.querySelectorAll('.legend-item').forEach(item=>{
+    item.addEventListener('mouseenter',()=>{
+      highlighted=+item.dataset.tool;
+      document.querySelectorAll('.legend-item').forEach((el,i)=>{
+        el.classList.toggle('dimmed', i!==highlighted);
+        el.classList.toggle('active', i===highlighted);
       });
-
-      // theory box after notes
-      setTimeout(()=>{
-        tbox.classList.add('show');
-      },notes.length*120+300);
-
-      // reset button after a while
-      setTimeout(()=>{
-        running=false;
-        label.textContent='Try again';
-        btn.style.borderColor='';
-        btn.style.color='';
-      },4000);
-
-    },2400);
+      draw();
+    });
+    item.addEventListener('mouseleave',()=>{
+      highlighted=-1;
+      document.querySelectorAll('.legend-item').forEach(el=>{
+        el.classList.remove('dimmed','active');
+      });
+      draw();
+    });
   });
+
+  // animate in on scroll
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting)return;
+      let prog=0;
+      (function anim(){
+        prog=Math.min(prog+.025,1);
+        // scale all values by prog
+        ctx.clearRect(0,0,SIZE,SIZE);
+        const origVals=TOOLS.map(t=>t.values);
+        TOOLS.forEach((t,ti)=>{ t.values=origVals[ti].map(v=>v*prog); });
+        draw();
+        TOOLS.forEach((t,ti)=>{ t.values=origVals[ti]; });
+        if(prog<1)requestAnimationFrame(anim);
+        else draw();
+      })();
+      obs.unobserve(e.target);
+    });
+  },{threshold:.3});
+  obs.observe(canvas);
 })();
 </script>
 </body>
