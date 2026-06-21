@@ -418,6 +418,34 @@
       max-width: 100%;
     }
 
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: none; }
+
+    /* ── TYPING CURSOR ── */
+    .cursor {
+      display: inline-block;
+      width: 2px; height: 1em;
+      background: var(--gold);
+      margin-left: 3px;
+      vertical-align: text-bottom;
+      animation: blink .9s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── STAT COUNTER ── */
+    .hs-num { transition: color .3s; }
+
     @media (max-width: 800px) {
       .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
       .hero-right { display: none; }
@@ -439,7 +467,7 @@
     <li><a href="#publications">Research</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="daw.html" style="color:var(--gold);">BeatML ↗</a></li>
+    <li><a href="daw.html" style="color:var(--gold);">EchoForge ↗</a></li>
   </ul>
 </nav>
 
@@ -489,7 +517,7 @@
 <div class="daw-banner">
   <div class="daw-banner-left">
     <p class="daw-banner-eyebrow">New Project</p>
-    <h2 class="daw-banner-title">BeatML — a DAW that teaches as you create</h2>
+    <h2 class="daw-banner-title">EchoForge — a DAW that teaches as you create</h2>
     <p class="daw-banner-sub">100% offline &bull; Free forever &bull; Open source</p>
   </div>
   <div class="daw-banner-right">
@@ -797,8 +825,88 @@
 
 <footer>
   <span>Shubhankar Kamthankar &mdash; 2026</span>
-  <a href="daw.html" style="color:var(--gold);">BeatML Project &rarr;</a>
+  <a href="daw.html" style="color:var(--gold);">EchoForge Project &rarr;</a>
 </footer>
 
+<script>
+/* ── SCROLL REVEAL ── */
+(function () {
+  const targets = [
+    '.tl-item', '.pub-item', '.project-card',
+    '.edu-item', '.section-header', '.skill-group',
+    '.skills-table tr', '.contact-inner > div',
+    '.contact-link-row', '.daw-banner'
+  ];
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  targets.forEach(sel => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add('reveal');
+      el.style.transitionDelay = (i * 0.07) + 's';
+      obs.observe(el);
+    });
+  });
+})();
+
+/* ── STAT COUNTERS ── */
+(function () {
+  const stats = [
+    { el: document.querySelectorAll('.hs-num')[0], target: 2,     suffix: '',    decimals: 0 },
+    { el: document.querySelectorAll('.hs-num')[1], target: 4,     suffix: '',    decimals: 0, prefix: '#' },
+    { el: document.querySelectorAll('.hs-num')[2], target: 0.993, suffix: '',    decimals: 3 },
+    { el: document.querySelectorAll('.hs-num')[3], target: 4,     suffix: '×',   decimals: 0 },
+  ];
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const s = stats.find(x => x.el === e.target);
+      if (!s) return;
+      obs.unobserve(e.target);
+      let startTs = null;
+      const dur = 1100;
+      function step(ts) {
+        if (!startTs) startTs = ts;
+        const prog = Math.min((ts - startTs) / dur, 1);
+        const ease = 1 - Math.pow(1 - prog, 3);
+        const val  = ease * s.target;
+        e.target.textContent = (s.prefix || '') + val.toFixed(s.decimals) + (s.suffix || '');
+        if (prog < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.5 });
+
+  stats.forEach(s => { if (s.el) obs.observe(s.el); });
+})();
+
+/* ── TYPING EFFECT on hero role ── */
+(function () {
+  const el = document.querySelector('.hero-role');
+  if (!el) return;
+  const original = el.textContent.trim();
+  el.textContent = '';
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  el.appendChild(cursor);
+
+  let i = 0;
+  const delay = 500; // start delay
+  setTimeout(function type() {
+    if (i < original.length) {
+      el.insertBefore(document.createTextNode(original[i]), cursor);
+      i++;
+      setTimeout(type, 38 + Math.random() * 22);
+    }
+  }, delay);
+})();
+</script>
 </body>
 </html>
