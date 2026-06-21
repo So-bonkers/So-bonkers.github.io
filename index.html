@@ -279,6 +279,62 @@
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
+    /* ── PDF MODAL ── */
+    .pdf-modal-overlay {
+      display: none;
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,.85);
+      backdrop-filter: blur(6px);
+      align-items: center; justify-content: center;
+      padding: 1.5rem;
+      animation: fadeOverlay .2s ease;
+    }
+    .pdf-modal-overlay.open { display: flex; }
+    @keyframes fadeOverlay { from{opacity:0} to{opacity:1} }
+    .pdf-modal {
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      width: 100%; max-width: 960px;
+      height: 90vh;
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from{transform:translateY(16px);opacity:0} to{transform:none;opacity:1} }
+    .pdf-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .9rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
+    }
+    .pdf-modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--ink);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: 70%;
+    }
+    .pdf-modal-actions { display: flex; gap: .6rem; align-items: center; }
+    .pdf-dl-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .78rem; font-weight: 500; letter-spacing: .04em;
+      padding: .4rem .9rem; border-radius: 4px;
+      background: var(--gold); color: #fff; border: none; cursor: pointer;
+      text-decoration: none; transition: background .2s;
+    }
+    .pdf-dl-btn:hover { background: var(--gold-light); color: #fff; }
+    .pdf-close-btn {
+      background: transparent; border: 1px solid var(--rule);
+      color: var(--muted); font-size: 1.1rem; width: 32px; height: 32px;
+      border-radius: 6px; cursor: pointer; display: flex;
+      align-items: center; justify-content: center; transition: all .2s;
+    }
+    .pdf-close-btn:hover { border-color: var(--gold); color: var(--ink); }
+    .pdf-modal iframe {
+      flex: 1; width: 100%; border: none; display: block;
+      background: #fff;
+    }
+
     @media (max-width: 800px) {
       .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
       .hero-right { display: none; }
@@ -323,6 +379,7 @@
         <a class="btn btn-gold" href="mailto:shubhankar.kam@gmail.com">Get in touch</a>
         <a class="btn btn-ghost" href="https://github.com/So-bonkers" target="_blank">GitHub</a>
         <a class="btn btn-ghost" href="https://www.linkedin.com/in/shubhankar-kamthankar-8ab0501b5/" target="_blank">LinkedIn</a>
+        <button class="btn btn-ghost" onclick="openPDF('docs/resume.pdf','Resume — Shubhankar Kamthankar')">View CV</button>
       </div>
     </div>
     <div class="hero-right">
@@ -376,7 +433,7 @@
       <div class="tl-body">
         <p class="tl-role">Jr. AI Audio &amp; Speech Engineer</p>
         <p class="tl-company">Miko</p>
-        <p class="tl-desc">Building speech AI systems for interactive children's robotics — speech processing pipelines, audio intelligence, and AI-powered conversational experiences.</p>
+        <p class="tl-desc">Building speech AI for children's robotics. Curated a <strong>641-hour multilingual child speech dataset</strong> — including ~500 hrs of English, the largest open corpus of its kind. Trained a semantic VAD model on proprietary data that <strong>surpassed smart-turn-v3.2's 94.37% accuracy with 96.2%</strong>.</p>
       </div>
     </div>
     <div class="tl-item">
@@ -460,6 +517,7 @@
         between two MCs. Provides closed-form asymptotic guarantees via error exponents. Outperforms the
         syndrome-former baseline — P<sub>err</sub> ≈ 0 vs 0.41 at N = 500, p = 0.2.
       </p>
+      <button class="btn btn-ghost" style="margin-top:1rem;font-size:.8rem;" onclick="openPDF('docs/wcnc2026.pdf','IEEE WCNC 2026 — Convolutional Code Detection')">Read Paper →</button>
     </div>
     <div class="pub-item">
       <div class="pub-meta">
@@ -479,6 +537,7 @@
         <p class="pub-score">Hard: <span>0.7573</span></p>
         <p class="pub-score">Macro-F1 on hidden test set</p>
       </div>
+      <button class="btn btn-ghost" style="margin-top:1rem;font-size:.8rem;" onclick="openPDF('docs/pan2026.pdf','PAN @ CLEF 2026 — Style Change Detection')">Read Paper →</button>
     </div>
   </section>
 </div>
@@ -687,6 +746,47 @@
   setTimeout(function type(){
     if(i<text.length){ el.insertBefore(document.createTextNode(text[i]), cursor); i++; setTimeout(type,40+Math.random()*20); }
   },600);
+})();
+</script>
+
+<!-- PDF MODAL -->
+<div class="pdf-modal-overlay" id="pdf-overlay" role="dialog" aria-modal="true">
+  <div class="pdf-modal">
+    <div class="pdf-modal-header">
+      <span id="pdf-modal-title" style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--ink);"></span>
+      <div style="display:flex;gap:.5rem;align-items:center;">
+        <a class="pdf-dl-btn" id="pdf-dl-link" href="#" download>Download</a>
+        <button class="pdf-close-btn" id="pdf-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <iframe id="pdf-frame" src="" title="PDF Viewer" style="flex:1;border:none;border-radius:0 0 10px 10px;"></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  const overlay = document.getElementById('pdf-overlay');
+  const frame   = document.getElementById('pdf-frame');
+  const title   = document.getElementById('pdf-modal-title');
+  const dlLink  = document.getElementById('pdf-dl-link');
+
+  window.openPDF = function(src, label) {
+    title.textContent = label || '';
+    dlLink.href = src;
+    frame.src = src;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  function closePDF() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+    frame.src = '';
+  }
+
+  document.getElementById('pdf-close').addEventListener('click', closePDF);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closePDF(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closePDF(); });
 })();
 </script>
 </body>
